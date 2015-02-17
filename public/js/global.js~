@@ -1,0 +1,4 @@
+// global.js
+var data;
+var graph;
+graph.project_id=$("#graph1").data('id');

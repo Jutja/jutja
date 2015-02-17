@@ -1,0 +1,205 @@
+ <div class="col-lg-5 col-md-5 col-sm-8 col-xs-9 bhoechie-tab-container" id="change_node" data-id="" style="display:none;">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bhoechie-tab-menu">
+              <div class="list-group">
+                <a href="#" class="list-group-item active text-center">
+                 <h3><i class="icon-info_task"></i><br>Info</h3>
+                </a>
+                <a href="#" id="modal_addTask" class="list-group-item text-center">
+                 <h3> <i class="icon-add_task"></i><br>Add Task</h3>
+                </a>
+                <a href="#" class="list-group-item text-center">
+                <h3>  <i class="icon-edit_task"></i><br>Edit Task</h3>
+                </a>
+                <a href="#" class="list-group-item text-center">
+                  <h3><i class="icon-del_task"></i><br>Delete</h3>
+                </a>
+              </div>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 bhoechie-tab">
+                <!-- Info section -->
+                <div class="bhoechie-tab-content active">
+                      <h2 style="font-size:25px;color:#4883da;text-align:center;" id="info_title"></h2>
+                      <div class="form-horizontal" style="font-size: 20px;margin-top: 0px;margin-bottom:0px;">
+                          <div class="form-group" style = "font-size:15px;margin-bottom: 0px;">
+                              <label class="col-sm-2 control-label" style="width: 27%; color: gray;">Info</label>
+                              <div class="col-sm-10" style="width:72%">
+                                <p class="form-control-static"  id="info_info"></p>
+                              </div>
+                          </div>
+                          <div class="form-group" style = "font-size:15px;margin-bottom: 0px;">
+                              <label class="col-sm-2 control-label" style="width: 27%; color: gray;">Due date</label>
+                              <div class="col-sm-10" style="width:72%">
+                                <p class="form-control-static"  id="info_date"></p>
+                              </div>
+                          </div>
+                          <div class="form-group" style = "font-size:15px;margin-bottom: 0px;">
+                              <label class="col-sm-2 control-label" style="width: 27%; color: gray;">Status</label>
+                              <div class="col-sm-10" style="width:72%">
+                                <p class="form-control-static"  id="info_status"></p>
+                              </div>
+                          </div>
+                          <div class="form-group" style = "font-size:15px;margin-bottom: 0px;">
+                              <label class="col-sm-2 control-label" style="width: 27%; color: gray;">Assigned To</label>
+                              <div class="col-sm-10" style="width:72%">
+                                <p class="form-control-static"  id="info_assign">None</p>
+                              </div>
+                          </div>
+                      </div>
+                      <div style="width:100%;margin-top:3%;">
+                        <span id="likes" class="hotspot" style="margin-left:10%;"></span>
+                        <a style="width: 10%;cursor: pointer;margin-left: 5%;" class="" id="node_like">
+                            <i class=" icon-thumbs-o-up thumbs-up fa-2x"></i>
+                        </a>
+                        <button  class="btn btn-success" style="margin-left: 10%;" id="node_hide">Hide/Unhide</button>
+                        <a style="width: 10%; cursor: pointer; margin-left: 10%;" class="" id ="node_dislike">
+                              <i class="icon-thumbs-o-down thumbs-down fa-2x"  ></i>
+                        </a>
+                        <span id="dislikes" class="hotspot" style="margin-left:5%"></span>
+                      </div>
+
+                  <div style="margin-top:10px">
+                                          
+                     <div style="border:1px solid;margin-bottom:10px;border-radius: 5px;">
+                      <div><i class="icon-discussion"></i>
+                      <span style="margin-left:10px;font-size:20px;">Discussion</span></div><hr >
+                        <div class="box-body chat" id="chat-box" style=" width: auto; height: 200px;margin-left:20px ; ">
+                        </div><!-- /.chat -->
+                        <div class="box-footer" style="margin-top:5px;margin-bottom:5px;margin-right: 10px;margin-left: 10px;" id="chat-footer">
+                            <div class="input-group">
+                                <input class="form-control" id="user_message" placeholder="Type message..." />
+                                  <div class="input-group-btn">
+                                      <button class="btn btn-success" style="background-color:#55518a;" id="send_message">
+                                        <i class="icon-send">
+                                        </i>
+                                      </button>
+                                  </div>
+                            </div>
+                        </div>
+                      </div>
+                            <!-- /.box (chat box) -->
+                  </div>
+                </div>
+                <!-- discussion section -->
+               
+
+                <!-- create search -->
+                <div class="bhoechie-tab-content">
+                      <h2 style="margin-top: 20px;font-size: 25px;color:#55518a">Create Sub-task</h2>
+                      <hr style="opacity: 0.5;">
+                      <div class="form-horizontal" style="font-size: 20px;margin-top: 10px;">
+                        <div class="form-group">
+                          <label for="title" class="col-sm-2 control-label">Title</label>
+                          <div class="col-sm-10">
+                          <input  type="text" class="form-control" id="create_title" placeholder="Title">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="info" class="col-sm-2 control-label">Info</label>
+                          <div class="col-sm-10" >
+                            <textarea class="form-control" id="create_info" rows="3" style="height:120px"></textarea>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="datepicker" class="col-sm-2 control-label">Date</label>
+                          <div class="col-sm-10" >
+                            <input  type="text" class="form-control" id="cr_date_picker">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="status" class="col-sm-2 control-label">Status</label>
+                          <div class="col-sm-10" >
+                            <select class="form-control" id="create_dropdown">
+                              <option>Incomplete</option>
+                              <option>Completed</option>
+                              <option>Ongoing</option>
+                              <option>Not Started</option>
+                              <option>Not set</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="status" class="col-sm-2 control-label">Assign</label>
+                          <div class="col-sm-10" >
+                            <select class="form-control" id="create_assign">
+                              <option>None</option>
+                              <option>Myself</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-sm-offset-2 col-sm-10">
+                            <button id="cr_submit" class="btn btn-success" style="text-align: center;align-content: center;
+                            margin-left: 25%;">Submit</button>
+                            <!--<button type="reset" class="btn btn-primary">reset</button>-->
+                          </div>
+                        </div>
+                      </div> 
+                </div>
+                <div class="bhoechie-tab-content">
+                     <h2 style="margin-top: 20px;font-size:25px;color:#55518a">Edit task</h2>
+                      <hr>
+                      <div class="form-horizontal" style="font-size: 20px;margin-top: 10px;">
+                        <div class="form-group">
+                          <label for="title" class="col-sm-2 control-label">Title</label>
+                          <div class="col-sm-10">
+                          <input  type="text"  class="form-control" id="edit_title" placeholder="Title">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="info" class="col-sm-2 control-label">Info</label>
+                          <div class="col-sm-10" >
+                            <textarea class="form-control" id="edit_info" rows="4" style="height:120px"></textarea>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="datepicker" class="col-sm-2 control-label">Date</label>
+                          <div class="col-sm-10" >
+                            <input  type="text"  class="form-control" id="ed_date_picker">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="status" class="col-sm-2 control-label">Status</label>
+                          <div class="col-sm-10" >
+                            <select class="form-control" id="edit_dropdown">
+                              <option>Incomplete</option>
+                              <option>Completed</option>
+                              <option>Ongoing</option>
+                              <option>Not Started</option>
+                               <option>Not set</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="status" class="col-sm-2 control-label">Assign</label>
+                          <div class="col-sm-10" >
+                            <select class="form-control" id="edit_assign">
+                              <option>None</option>
+                              <option>Myself</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="dropbox" class="col-sm-2 control-label">Attach</label>
+                          <div class="col-sm-10" id="dropbox">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-sm-offset-2 col-sm-10">
+                            <button id="ed_submit" class="btn btn-success" style="text-align: center;align-content: center;
+                            margin-left: 25%;">Submit</button>
+                            <!--<button type="reset" class="btn btn-primary">reset</button>-->
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                <div class="bhoechie-tab-content">
+                    <center>
+                      <h3 style="margin-top: 100px;color:#55518a">Are  you  sure  you  want  to  delete  this  task?</h3>
+                      <div style="padding-top:30px;">
+                            <button id ="task_delete" class="btn btn-danger">Delete</button>
+                            <button type="button" id= "task_cancel" class="btn btn-primary">Cancel</button>
+                      </div>
+                    </center>
+                </div>
+            </div>
+        </div>

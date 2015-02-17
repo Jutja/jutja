@@ -1,0 +1,4 @@
+Restricted Zoomin and Zoom out
+	In svgGraphics.js file, scale function is present
+		here a line is added to restrict zoom in and zoom out 
+		if(actualScale < 3 && actualScale > 0.4)

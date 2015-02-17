@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jutja.com</title>
+    <link href="http://jutja.com/css/style.css" rel="stylesheet" media="screen">
+    <link href="http://jutja.com/css/delete_node_form.css"rel="stylesheet" >
+    <link href="http://jutja.com/css/intro_form.css"rel="stylesheet" >
+    <link href="http://jutja.com/css/new_node_form.css"rel="stylesheet" >
+    <link href="http://jutja.com/css/create_map.css"rel="stylesheet" >
+    <link href="http://jutja.com/css/lucky.css" rel="stylesheet" >
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
+    <link href="http://jutja.com/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+    <link href="http://jutja.com/css/app_udetails1.css" rel="stylesheet" type="text/css" />  
+    <link rel="stylesheet" href="http://jutja.com/css/bootstrap-tagsinput.css">
+    <link rel="stylesheet" href="http://jutja.com/css/perfect-scrollbar.css">
+    <link href="http://jutja.com/css/pikaday.css" rel="stylesheet" type="text/css" />  
+    <link href="http://jutja.com/css/modal.css" rel="stylesheet">
+
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://jutja.com/js/vivagraph.js"></script>
+    <script type="text/javascript" src="http://jutja.com/js/global.js"></script>
+    <script type="text/javascript" src="http://jutja.com/js/functions.js"></script>
+    <script type="text/javascript" src="http://jutja.com/js/exp1.js"></script>
+
+     <script src="http://jutja.com/js/together.js"></script>
+    <script type="text/javascript">
+           var discuss = function(event){
+          if(event.keyCode == 13) {
+              $("#send_message").click();
+            
+          }
+        }
+      </script>
+          <script>
+      TogetherJSConfig_findRoom = {prefix: "jutja_map", max: 5};
+      TogetherJSConfig_autoStart = true;
+      TogetherJSConfig_suppressJoinConfirmation = true;
+      TogetherJSConfig_storagePrefix = "jutja";
+    </script>
+     
+        <link href="http://jutja.com/css/app_project_map.css"rel="stylesheet" >
+      <style type="text/css">
+        .fa-times-circle-o:before {
+  content: "\f05c";
+}
+.fa-times:before {
+  content: "\f00d";
+}
+      </style>
+   
+    <script src="http://jutja.com/js/classie.js"></script>
+</head>
+<body class="skin-blue" onload='display_map()' style='width:100%; height: 100%;'>
+
+        <div class="col-lg-5 col-md-5 col-sm-8 col-xs-9 bhoechie-tab-container" id="change_node" style="display:none;">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bhoechie-tab-menu">
+              <div class="list-group">
+                <a href="#" class="list-group-item active text-center">
+                 <h3><i class="fa fa-info-circle"></i><br>Info</h3>
+                </a>
+                <a href="#" class="list-group-item text-center">
+                 <h3> <i class="fa fa-comments-o"></i><br>Discussion</h3>
+                </a>
+                <a href="#" class="list-group-item text-center">
+                 <h3> <i class="fa fa-plus-circle"></i><br>Create</h3>
+                </a>
+                <a href="#" class="list-group-item text-center">
+                <h3>  <i class="fa fa-edit"></i><br>Edit</h3>
+                </a>
+                <a href="#" class="list-group-item text-center">
+                  <h3><i class="fa fa-trash-o"></i><br>Delete</h3>
+                </a>
+              </div>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 bhoechie-tab">
+                <!-- flight section -->
+                <div class="bhoechie-tab-content active">
+                    <center>
+                      <h2 style="margin-top: 20px;color:#55518a" id="info_title"></h2>
+                      <hr>
+                      <h3 style="margin-top: 10px;color:#55518a" id="info_info"></h3>
+                      <h3 style="margin-top: 10px;color:#55518a" id="info_date"></h3>
+                      <h3 style="margin-top: 10px;color:#55518a" id="info_status"></h3>
+
+                    </center>
+                </div>
+                <!-- train section -->
+                <div class="bhoechie-tab-content">
+                  <div>
+                     <h3 class="box-title" style="color:#55518a">
+                        <i class="fa fa-comments-o"></i> Discussions
+                     </h3>    
+                     <hr>                        
+                     <div class="slimScrollDiv" id="chat" style="width: auto; ">
+                        <div class="box-body chat" id="chat-box" style="max-height:500px; min-height:500px; overflow:hidden; position:relative">
+                        </div><!-- /.chat -->
+                        <div class="box-footer" id="chat-footer">
+                            <div class="input-group">
+                                <input class="form-control" id="user_message" placeholder="Type message..." onkeydown="discuss(event)" />
+                                  <div class="input-group-btn">
+                                      <button class="btn btn-success" style="background-color:#55518a;" id="send_message">
+                                        <i class="fa fa-plus">
+                                        </i>
+                                      </button>
+                                  </div>
+                            </div>
+                        </div>
+                      </div>
+                            <!-- /.box (chat box) -->
+                  </div>
+                </div>
+    
+                <!-- hotel search -->
+                <div class="bhoechie-tab-content">
+                      <h2 style="margin-top: 20px;color:#55518a">Create Sub-task</h2>
+                      <hr>
+                      <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                          <label for="title" class="col-sm-2 control-label">Title</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="create_title" placeholder="Title">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="info" class="col-sm-2 control-label">Info</label>
+                          <div class="col-sm-10" >
+                            <textarea class="form-control" id="create_info" rows="3" style="height:120px"></textarea>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="datepicker" class="col-sm-2 control-label">Date</label>
+                          <div class="col-sm-10" >
+                            <input type="text" class="form-control" id="cr_date_picker">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="status" class="col-sm-2 control-label">Status</label>
+                          <div class="col-sm-10" >
+                            <select class="form-control" id="create_dropdown">
+                              <option>Incomplete</option>
+                              <option>Completed</option>
+                              <option>Ongoing</option>
+                              <option>Not Started</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" id="cr_submit" class="btn btn-success">Submit</button>
+                            <button type="reset" class="btn btn-primary">reset</button>
+                          </div>
+                        </div>
+                      </form>
+                </div>
+                <div class="bhoechie-tab-content">
+                     <h2 style="margin-top: 20px;color:#55518a">Edit task</h2>
+                      <hr>
+                      <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                          <label for="title" class="col-sm-2 control-label">Title</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="edit_title" placeholder="Title">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="info" class="col-sm-2 control-label">Info</label>
+                          <div class="col-sm-10" >
+                            <textarea class="form-control" id="edit_info" rows="4" style="height:120px"></textarea>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="datepicker" class="col-sm-2 control-label">Date</label>
+                          <div class="col-sm-10" >
+                            <input type="text" class="form-control" id="ed_date_picker">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="status" class="col-sm-2 control-label">Status</label>
+                          <div class="col-sm-10" >
+                            <select class="form-control" id="edit_dropdown">
+                              <option>Incomplete</option>
+                              <option>Completed</option>
+                              <option>Ongoing</option>
+                              <option>Not Started</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" id="ed_submit" class="btn btn-success">Submit</button>
+                            <button type="reset" class="btn btn-primary">reset</button>
+                          </div>
+                        </div>
+                      </form>
+                </div>
+                <div class="bhoechie-tab-content">
+                    <center>
+                      <h3 style="margin-top: 40px;color:#55518a">Are you sure you want to delete this task</h3>
+                      <div style="padding-top:20px;">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <button type="button" class="btn btn-primary">Cancel</button>
+                      </div>
+                    </center>
+                </div>
+            </div>
+        </div>
+
+
+    <div id="form"  style="display:none;"  >
+        <span class="button b-close">
+            <span>
+              <i class="fa fa-times-circle-o"></i>
+            </span>
+        </span>
+        <form id="node_form" >
+            <h1 id="h1">Editing your new note !!!!</h1>
+              <label>
+                <span>Title of your note:</span>
+                <input id="name" required type="text" name="name" placeholder="Enter the title for your note"/>
+              </label>
+              <label>
+                <span>Additional Info :</span>
+                <textarea id="info" name="info" placeholder="Enter details about your note"></textarea>
+              </label>
+              <label>
+                <span>Due Date :</span>
+                <div class="input-group date"  >
+                    <input type="text" required class="form-control" id="dateForm">
+                      <span class="input-group-addon" id = "bord"></span>
+                </div>
+              </label>
+              <label>
+                <span>Status :</span>
+                <select class="dropdown-stat" style="width: 150px;height: 24px; margin-bottom: 16px; margin-right: 6px;margin-top: 4px;" name="status" id="form_status">
+                    <option value="Incomplete" >Incomplete</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Ongoing">Ongoing</option>
+                    <option value="Not Started">Not started</option>
+                </select>
+              </label>
+              <br>
+              <label>
+                <div>
+                  <tr>
+                    <td>
+                      <button type="submit" style="width: 100px;margin-left: 75px;"  id="submit2">Submit
+                      </button>
+                    </td>
+                    <td>
+                      <button style="width: 100px;margin-left: 50px;" type="reset" id="reset">Reset
+                      </button>
+                    </td>
+                  </tr>
+                </div>
+              </label>
+        </form>
+    </div>
+
+                              
+                      <form id="create_map"  style="display:none;left:50%;">
+                      <span class="button b-close">
+                      <span> <i class="fa fa-times-circle-o"></i></span></span>
+                        <h1 id="h1">Building Your Map </h1>
+                        <label>
+                        <span>Map Name : </span>
+                        <input id="map_name" type="text" required  name="name_map" placeholder=" Enter the name of the map "/></label>
+                        
+                        <label>
+                          <span>Title of note :</span><input id="cr_name" required type="text" name="name" placeholder="Enter title for your first note"/></label>
+                        <label>
+                        <span>Message :</span>
+                        <textarea id="cr_message" name="info" placeholder="Enter details about your note"></textarea></label>
+                        <label>
+                          <span>Due Date :</span>
+                          <div class="input-group date"  >
+                                  <input type="text" required class="form-control" id="dateCreate"><span class="input-group-addon" id="bord"></span>
+                              </div>
+                          </label>
+                          <label>
+                            <span>Status :</span>
+                            <select class="dropdown-stat" style="width: 150px;height: 24px; margin-bottom: 16px; margin-right: 6px;margin-top: 4px;" name="status" id="create_status">
+                            <option value="Incomplete" >Incomplete</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Ongoing">Ongoing</option>
+                            <option value="Not Started">Not started</option>
+                            </select>
+                          </label>
+                          <br>
+                          <div>
+                          <tr>
+                          <td>
+                            <button type="submit" style="width: 100px;margin-left: 75px;" id="submit2">Submit</button></td>
+                          <td>
+                            <button style="width: 100px;margin-left: 50px;" type="reset" id="reset">Reset</button></td>
+                          </tr>
+                          </div>
+                        </form>  
+                        
+                        <div id="f"  style="display:none;">
+                        <span class="button b-close">
+                      <span> <i class="fa fa-times"></i></span></span>
+                          <h1 style="text-align:center;">Map Name : <a style="color:#000;" id="h1Fr">New Node</a></h1>
+                          <h2 style="text-align:left;">Map Info : <a style="color:#000;" id="h2Fr"></a></h2>
+                         
+                          
+
+                          <h2 style="text-align:left;margin-top: 0px; cursor:pointer;"> Due Date  : <a style="color:#000;" id="h3Fr"></a></h2>
+
+                          <h2 style="text-align:left;margin-top: 0px;"> Status  : <a style="color:#000;" id="h4Fr"></a></h2><br>
+                          <div style="margin-bottom: 35px;">
+                           <button class="fa  fa-thumbs-o-down thumbs-down" id ="node_dislike" ></button>
+                          <button class=" fa fa-thumbs-o-up thumbs-up" id="node_like" ></button>
+                           <button class="attach2"   >Attachements</button>
+                            <input type="file" class="attach" id="files">
+                            <button id="upload" style="width: 80px;font-size: 15px;font-size:16px;">Upload</button>
+                            <p id="status" style="float:left; margin-left:10px;">Please select a  file</p>
+
+                            </div>
+                            <!-- Chat box -->
+                            <div class="box box-success" style="margin-top:50px;">
+                                <div class="box-header">
+                                    <h3 class="box-title"><i class="fa fa-comments-o"></i> Discussions</h3>
+                                    <div class="box-tools pull-right" data-toggle="tooltip" title="minimize/maximize">
+                                        <div class="btn-group" data-toggle="btn-toggle" >
+                                        <button type="button" class="btn btn-default btn-sm "  id="minimize"><i class="fa fa-minus-square" ></i></button>                                            
+                                            <button type="button" class="btn btn-default btn-sm"  id="maximize"><i class="fa fa-square-o"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slimScrollDiv" id="chat" style="width: auto; ">
+                                <div class="box-body chat" id="chat-box" style="max-height:200px; overflow:hidden; position:relative">
+                                  
+                                </div><!-- /.chat -->
+                                
+                                <div class="box-footer" id="chat-footer">
+                                    <div class="input-group">
+                                        <input class="form-control" id="user_message" placeholder="Type message..." onkeydown="discuss(event)" />
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-success" id="send_message"><i class="fa fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            <!-- /.box (chat box) -->
+                            </div>
+
+                          <div class="ui-grid-b">
+                            <div class="ui-block-a"><a class="ui-shadow ui-btn ui-corner-all" id="cr">Create Sub-Note</a></div>
+                            <div class="ui-block-b"><div class="button-wrap"><a class="ui-shadow ui-btn ui-corner-all" id="ed">Edit this Note</a></div></div>
+                            <div class="ui-block-c"><div class="button-wrap"><a class="ui-shadow ui-btn ui-corner-all" id="del">Delete this Note</a></div>
+                            </div>
+                            <div class="ui-block-d"><a class="ui-shadow ui-btn ui-corner-all" id="hide">Hide/Unhide </a></div>
+                            
+                          </div>
+                          <!--<span> <td><a class="button_example" id="cr">Create</a></td></span>
+                          <span> <td><a class="button_example" id="ed">Edit</a></td></span>
+                          <span> <td><a class="button_example" id="del">Delete</a></td></span>
+                          <span> <td><a class="button_example" id="hide">Hide/Unhide</a></td></span>-->
+                        </div>
+                                
+                        <form id="d" style="display:none;">
+                        <span class="button b-close">
+                      <span> <i class="fa fa-times-circle-o"></i></span></span>
+                          <h2>Are you sure you want to delete this node?</h2>
+                          <button type="submit" id="submit_del">
+                            <i class="fa fa-trash-o fa-lg"></i>
+                              Delete
+                              </button>
+                          <button type="button" id="cancel_del">Cancel</button>
+                        </form>
+       <% include menu %>
+
+
+
+        <div class="wrapper row-offcanvas row-offcanvas-left">
+         <aside class="left-side sidebar-offcanvas">                
+                <!-- sidebar: style can be found in sidebar.less -->
+                <section class="sidebar">
+                    <!-- Sidebar user panel -->
+                    <div class="user-panel">
+                        <div class="pull-left image">
+                            <img src="http://www.gravatar.com/avatar/<%=user.gravatar%>" class="img-circle" alt="User Image" />
+                        </div>
+                        <div class="pull-left info">
+                           <p>Hello,<%if(user.fname) { %><%=user.fname %><% } else { %><%=user.name %><% } %></p>
+
+                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                        </div>
+                    </div>
+                    <!-- 
+                    <form action="#" method="get" class="sidebar-form">
+                        <div class="input-group">
+                            <input type="text" name="q" class="form-control" placeholder="Search..."/>
+                            <span class="input-group-btn">
+                                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </form>
+                    -->
+                    <!-- sidebar menu: : style can be found in sidebar.less -->
+                    <ul class="sidebar-menu">
+                       <!--<li>
+                            <a href="http://jutja.com/">
+                                <i class="fa fa-home"></i> <span>Home</span> 
+                            </a>
+                        </li>-->
+                        
+                        
+                       
+                        
+                        <li onclick="functions.cr_project()" >
+                          <a class=" item_l" >
+                           <i class="fa fa-plus"></i> <span>Create a New Map</span> 
+                           </a>
+                        </li>
+                        <li class="active">
+                            <a href="#">
+                                <i class="fa fa-sitemap"></i> <span>Notes(current)</span> 
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a class=" item_l" id="center">
+                            <i class="fa fa-bullseye"></i> <span>Center your Notes</span> 
+                          </a>
+                        </li>
+                        <li>
+                          <a class=" item_l" onclick="functions.pin()">
+                            <i class="fa pin icon"></i> <span>Pin your notes</span> 
+                          </a>
+                        </li>
+                        <li >
+
+                            <a href="http://jutja.com/app">
+                                <i class="fa fa-book"></i> <span>Go back to Projects</span>
+                            </a>
+                        </li>
+                         <li>
+                            <a href="http://jutja.com/project/view?id=<%= pid %>">
+                                <i class="fa fa-tasks"></i> <span>View your Maps</span> 
+
+                            </a>
+                        </li>
+                        <li >
+                            <a href="http://jutja.com/myinfo">
+                                <i class="fa fa-user"></i> <span>View Your Profile</span> 
+                            </a>
+                        </li>
+                        <!--<li>
+                            <a href="#">
+                                <i class="fa fa-th"></i> <span>Timeline</span> <small class="badge pull-right bg-green">new</small>
+                            </a>
+                        </li>
+                        <li>
+                        
+                            <a href="pages/calendar.html">
+                                <i class="fa fa-calendar"></i> <span>Calendar</span>
+                                <small class="badge pull-right bg-red">3</small>
+                            </a>
+                        </li>-->
+                        <!--<li>
+                            <a href="pages/mailbox.html">
+                                <i class="fa fa-envelope"></i> <span>Mailbox</span>
+                                <small class="badge pull-right bg-yellow">12</small>
+                            </a>
+                        </li>-->
+                    </ul>
+                </section>
+                <!-- /.sidebar -->
+            </aside>
+            <aside class="right-side">                
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>
+                          Notes
+                        <small>Control panel</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="http://jutja.com"><i class="fa fa-home"></i>Home</a></li>
+                        <li><a href="http://jutja.com/app"><i class="fa"></i>Projects</a></li>
+                        <li> <i class="fa " ><a href="http://jutja.com/project/view?id=<%= pid %>"></i> <%= pname %></a></li>
+                        <li> <i class="fa " ><a href="#"></i> <%= name %></a></li>
+                        <li class="active">Notes</li>
+                    </ol>
+                </section>
+                <!-- Main content -->
+                <section class="map_content">
+                    <div class = "segment" id="123" data-p_i="<%= pid %>" data-m_n="<%= name%>" data-pname="<%=pname%>" data-uname="<%if(user.fname) { %><%=user.fname %><% } else { %><%=user.name %><% } %>" data-gravitar="<%=user.gravatar%>" data-mail= "<%=user.email%>">
+                     <div id="graph1" class="map_graph">
+                     </div>
+                    </div>
+                </section><!-- /.content -->
+                
+            </aside><!-- /.right-side -->
+        </div><!-- ./wrapper -->
+
+   <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+  <script type="text/javascript" src="http://jutja.com/js/jquery.bpopup.min.js"></script>  
+<script type="text/javascript" src="http://jutja.com/js/classie.js"></script>
+   <script type="text/javascript" src="http://jutja.com/js/app.js"></script>
+   <script type="text/javascript" src="http://jutja.com/js/perfect-scrollbar.js"></script>
+   <script type="text/javascript" src="http://jutja.com/js/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+            <script type="text/javascript" src="http://jutja.com/js/pikaday.js"></script>
+
+
+<script type="text/javascript">
+      $( document ).ready(function() {
+           
+        $("#chat-box").perfectScrollbar({
+          wheelSpeed: 10,
+              wheelPropagation: false,
+              suppressScrollX: true,
+                minScrollbarLength: 50
+        });
+
+        document.getElementById("upload").onclick = function(){
+          s3_upload();
+        }
+
+            $("div.bhoechie-tab-menu>div.list-group>a").click(function(e) {
+        e.preventDefault();
+        $(this).siblings('a.active').removeClass("active");
+        $(this).addClass("active");
+        var index = $(this).index();
+        $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+        $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+    });
+
+    
+      });
+       var picker_cr = new Pikaday({
+      field: document.getElementById('cr_date_picker') 
+    });
+       var picker_ed = new Pikaday({
+      field: document.getElementById('ed_date_picker') 
+    });
+      </script>
+
+  <script type="text/javascript">
+   // var str= String(<%=user.madeon%>);
+    var a = new Date('<%=user.madeon%>');
+   var final1= a.toUTCString().split(/GMT.*/);
+    document.getElementById("temp1").innerHTML = "Member Since <br> " + final1[0];
+</script>
+
+<!--modal form-->
+<script type="text/javascript">
+  $(document).ready(function() {
+
+}); 
+  </script>
+
+</body>
+</html>

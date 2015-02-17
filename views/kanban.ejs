@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <title>KanBan Interface</title>
+
+        <link rel="stylesheet" href="kanban/lib/Bootstrap/bootstrap.min.css" />
+        <link rel="stylesheet" href="kanban/lib/jQuery/jquery.ui.min.css" />
+        <link rel="stylesheet" href="kanban/assets/todo.css" />
+        <link rel="stylesheet" type="text/css" href="https://jutja.com/css/all.css"> 
+
+    </head>
+
+    <body class="well">
+   <% include menu %>
+        <div id="container">
+
+            <div id="header">Kan Ban Interface - PreAlpha</div>
+
+            <div class="task-list task-container" id="pending">
+                <h3>To Do</h3>
+                <div id='addpending' onclick="(function(){
+                $('addpending').hide();
+                $('todo-form-i').show();
+                })()">Add a card</div><form id="todo-form-i" style="display:none">
+                    <input type="text" placeholder="Title" />
+                     <input type="button" class="btn btn-primary" value="Add Task" onclick="todo.addcard();" />
+                    </form>
+            </div>
+
+            <div class="task-list task-container" id="inProgress">
+                <h3>In Progress</h3>
+            </div>
+
+            <div class="task-list task-container" id="completed">
+                <h3>Completed</h3>
+            </div>
+            <div class="task-list task-container" id="Draft">
+                <h3>Draft</h3>
+            </div>
+
+            <div class="task-list">
+                <h3>Add a task</h3>
+                <form id="todo-form">
+                    <input type="text" placeholder="Title" />
+                    <textarea placeholder="Description"></textarea>
+                    <input type="text" id="datepicker" placeholder="Due Date (dd/mm/yyyy)" />
+                    <input type="button" class="btn btn-primary" value="Add Task" onclick="todo.add();" />
+                </form>
+
+                <input type="button" class="btn btn-primary" value="Clear Data" onclick="todo.clear();" />
+
+                <div id="delete-div">
+                    Drag Here to Delete
+                </div>
+            </div>
+
+            <div style="clear:both;"></div>
+	          <script type="text/javascript" src="kanban/lib/jQuery/jquery.min.js"></script>
+            <script type="text/javascript" src="kanban/lib/Bootstrap/bootstrap.min.js"></script>
+            <script type="text/javascript" src="kanban/lib/jQuery/jquery.ui.min.js"></script>
+            <script type="text/javascript" src="kanban/assets/todo.js"></script>
+
+            <script type="text/javascript">
+                $( "#datepicker" ).datepicker();
+                $( "#datepicker" ).datepicker("option", "dateFormat", "dd/mm/yy");
+
+                $(".task-container").droppable();
+                $(".todo-task").draggable({ revert: "valid", revertDuration:200 });
+                todo.init();
+            </script>
+
+        </div>
+    </body>
+</html>

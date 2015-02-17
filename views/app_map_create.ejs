@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<title>Create a Map
+</title>
+<head>
+	<link rel="stylesheet" type="text/css" href="https://jutja.com/css/button.css">
+	<link rel="stylesheet" type="text/css" href="https://jutja.com/css/semantic.css">
+    <link rel="stylesheet" type="text/css" href="https://jutja.com/css/icon.css">
+      <link rel="stylesheet" type="text/css" href="https://jutja.com/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="https://jutja.com/css/component.css" />
+    <link rel="stylesheet" type="text/css" href="https://jutja.com/css/lucky.css" />
+
+    <script src="https://jutja.com/js/modernizr.custom.js"></script>
+            <style type="text/css" media="screen">
+        #main { top: 50px; position: absolute; }
+    </style>
+</head>
+<body>
+<nav class="cbp-spmenu cbp-spmenu-horizontal cbp-spmenu-top cbp-spmenu-open" id="cbp-spmenu-s3">
+ <a id="showLeftPush" class="item item_l">Menu</a>
+      <a class="active item" href="https://jutja.com/app">
+        Projects
+      </a>
+      <a class="item_l" href="">
+         View Maps
+      </a>
+      
+      <a class="item" href="https://jutja.com/myinfo">
+         View Profile
+      </a>
+      <a class="logout" style="position:fixed;right:0px;" href="https://jutja.com/logout">
+        Logout
+      </a>
+    </nav> <div id="main"></div>
+<form align="center" action="/project/maps/create" method="post" enctype="application/x-www-form-urlencoded" class="inverted segment ui form segment" >
+   <div>
+        <label for="name">Name of Map:</label>
+        <input type="text" id="name" name="name">
+       
+        <label for="name">Info:</label>
+        <input type="text" id="info" name="info">
+       <input type=hidden id="project_id" name= "project_id" value= '<%= pid%>'>
+    </div>
+    <div class="button">
+        <button type="submit">Submit</button>
+    </div>
+</form> 
+
+    
+</body>

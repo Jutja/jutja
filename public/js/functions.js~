@@ -1,0 +1,195 @@
+generateModalOnDbClick = function(node) {
+   var popup=' <div class="ui horizontal labeled icon menu"><a id="create" class="red item"><i class="add icon"></i>Add Child</a><a id="delete" class="red item"><i class="remove icon"></i>Delete Node</a></div><h2 id="head" style="text-align:center;">'+node.name+'</h2><div id="info" >'+node.info+'</div>';     
+    alertify.set({
+				labels : {
+					ok     : "Edit",
+					cancel : "Cancel"
+				},
+				delay : 5000,
+				buttonReverse : false,
+				buttonFocus   : "ok"
+			});
+      alertify.confirm("", function (e) {
+				if (e) {
+                    
+                    edit(node);
+				} else {
+					alertify.error("You've clicked Cancel");
+				}
+      });
+        $('.alertify-message').append($.parseHTML(popup));
+   $("#create").on( 'click', function () {
+        $('.alertify').detach();
+       create(node);
+   });
+     $("#delete").on( 'click', function () {
+        $('.alertify').detach();
+       del(node);
+   });
+          };
+
+    function edit(node){
+           var m = ' <form id="form" class="reveal-modal" action="" method="post"><h1 id="h1">'+node.name+'<span>Please Enter all the information of nodes.</span></h1><label><span>Title :</span><input id="name" type="text" name="name" placeholder="Name of Node"/></label><label><span>Short Description :</span><textarea id="message" name="message" placeholder="Short Description"></textarea></label><label><span>More Info :</span><textarea id="notes" name="notes" placeholder="More Info"></textarea></label></form>';
+        alertify.set({
+				labels : {
+					ok     :"OK",
+					cancel : "Cancel"
+				},
+				delay : 5000,
+				buttonReverse : false,
+				buttonFocus   : "ok"
+			});
+    alertify.confirm("", function (e) {
+				if (e) {
+                    alertify.success("You've sucessfully edited a node");
+                    var body=document.getElementById("message").value;
+                    var title=document.getElementById("name").value;
+                    var c=new Array();
+                    graph.forEachLinkedNode(node.i_no, function(linkedNode, link){
+                        if(link.toId==node.i_no)
+                        {
+                            c.push(link.fromId);
+                        }
+                        else if(link.fromId==node.i_no)
+                        {
+                            c.push(link.toId);
+                        }
+                    });
+                    graph.removeNode(node.i_no,node);
+                    graph.forEachLinkedNode(node.i_no, function(linkedNode, link){
+                        graph.removeLink(link);
+                    });
+             
+                    node.info=body;
+                    node.name=title;
+                    graph.addNode(node.i_no,node);			
+                    var j=0;
+                    for(j=0;j<c.length;j++)
+                    graph.addLink(node.i_no,c[j]);
+				} 
+            else {
+					alertify.error("You've clicked Cancel");
+				}
+      });
+            $('.alertify-message').append($.parseHTML(m));
+
+         }
+ function create(node){
+      var m = ' <form id="form" class="reveal-modal" action="/project/maps/create" enctype="application/x-www-form-urlencoded" method="post"><h1 id="h1">New Node<span>Please fill all the texts in the fields.</span></h1><label><span>Title :</span><input id="name" type="text" name="name" placeholder="Your Full Name"/><input id="name" type="hidden" value="'+graph.project_id+'" name="project_id"/></label><label><span>Message :</span><textarea id="message" name="info" placeholder="Your Message to Us"></textarea></label><label><span>Notes :</span><textarea id="notes" name="notes" placeholder="Your Message to Us"></textarea></label></form>';
+             var min = 10000;
+            var max = 99999;
+             var i_no = Math.floor(Math.random() * (max - min + 1)) + min;
+      alertify.set({
+				labels : {
+					ok     :"OK",
+					cancel : "Cancel"
+				},
+				delay : 5000,
+				buttonReverse : false,
+				buttonFocus   : "ok"
+			});
+      alertify.confirm("", function (e) {
+				if (e) {
+                    alertify.success("You've sucessfully created a node");
+                     var body=document.getElementById("message");
+                var title=document.getElementById("name").value;
+                    var info=body.value;
+                     var newNode = {"i_no":i_no,"name":title, "info":info,"childi_no":[]};
+	graph.addNode(i_no,newNode);
+            var l= data.nodes.length;
+            if(node.i_no!=0)
+            {  
+                data.nodes.push(newNode);
+                node.childi_no.push(i_no);
+        	    graph.addLink(node.i_no,i_no);
+		}
+            else if(l>0&&data.nodes[0].i_no==0)
+            {
+                data.nodes[0].i_no=i_no;
+                data.nodes[0].name=title;
+                data.nodes[0].info=info;
+            }
+            else
+            {
+                data.nodes.push(newNode);
+            }
+                    console.log(data.nodes.length);
+      }
+            else {
+					alertify.error("You've clicked Cancel");
+				}
+      });
+            $('.alertify-message').append($.parseHTML(m));
+         }
+
+ function delChild(node){
+            var i;
+            for(i=0;i<node.childi_no.length;i++)
+            {
+               // delChild(node.childi_no[i]);
+                var j=0;
+                while(data.nodes[j].i_no!=node.childi_no[i])
+                {
+                    j++;
+                }
+                delChild(data.nodes[j]);
+                  graph.forEachLinkedNode(node.childi_no[i], function(linkedNode, link){
+                 graph.removeLink(link);
+                });
+                graph.removeNode(node.childi_no[i],data.nodes[j]);
+               data.nodes.splice(j,1);
+            }
+         }
+         function del(node){
+             alertify.set({
+				labels : {
+					ok     : "Delete",
+					cancel : "Cancel"
+				},
+				delay : 5000,
+				buttonReverse : false,
+				buttonFocus   : "ok"
+			});
+                 alertify.confirm("Are you sure you want to delete it !! ", function (e) {
+				if (e) {
+                    delChild(node);
+            graph.forEachLinkedNode(node.i_no, function(linkedNode, link){
+                var a;
+                    if(link.toId==node.i_no)
+                    {
+                        a = link.fromId;
+                    }
+                    else if(link.fromId==node.i_no)
+                    {
+                        a = link.toId;
+                    }            
+                var j=0;
+                 while(data.nodes[j].i_no!=a)
+                {
+                    j++;
+                }
+                data.nodes[j].childi_no.splice((data.nodes[j].childi_no.indexOf(node.i_no)),1);
+            });
+                    j=0;
+                     while(data.nodes[j].i_no!=node.i_no)
+                {
+                    j++;
+                }
+                data.nodes.splice(j,1);
+             graph.removeNode(node.i_no,node);
+          alertify.success("You've successfully delted the node");
+                
+                    			
+                } else {
+					alertify.error("You've clicked Cancel");
+				}
+      });
+           
+         }
+function cr_project(){
+	
+     var Node = {"i_no":0,"name":"null", "info":"","childi_no":[]};
+	
+     create(Node);
+}
+

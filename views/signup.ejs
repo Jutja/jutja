@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<title>Sign-up
+</title>
+<head>
+	<link rel="stylesheet" type="text/css" href="css/signup.css">
+   <link rel="stylesheet" type="text/css" href="https://jutja.com/css/home_boot.css" />
+          <link href="https://jutja.com/css/homestyle.css" rel="stylesheet" id="theme-style">
+
+</head>
+<body data-spy="scroll">
+ <!-- ******HEADER****** --> 
+    <header id="top" class="header navbar-top" style="background-color:#3488CF">  
+        <div class="container">            
+            <h1 class="logo pull-left">
+                <a class="scrollto" href="https://jutja.com/" style="text-decoration:none;font-family:Decorative;font-size:25px;">
+                    <img id="logo-image" class="logo-image" src="https://jutja.com/img/logo.svg" alt="Logo">
+
+                    <span class="logo-title">Jutja</span>
+                </a>
+            </h1><!--//logo-->              
+            <nav id="main-nav" class="main-nav navbar-right" role="navigation">
+                <div class="navbar-header">
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button><!--//nav-toggle-->
+                </div><!--//navbar-header-->            
+                <div class="navbar-collapse collapse" id="navbar-collapse">
+                    <ul class="nav navbar-nav" style="font-size:16px;">
+                        <li class="nav-item "><a class="scrollto" href="https://jutja.com/">Home</a></li>
+                        <li class="nav-item "><a class="scrollto" href="https://jutja.com/login">Login</a></li>
+                        <li class="nav-item"><a class="scrollto" href="https://jutja.com/signup">Signup</a></li>
+                        <li class="nav-item"><a class="scrollto" href="https://jutja.com/resetpassword">Forgot Password</a></li>
+                    </ul><!--//nav-->
+                </div><!--//navabr-collapse-->
+            </nav><!--//main-nav-->           
+        </div>
+    </header><!--//header-->
+<div class="signup">
+<img alt="Jutja-logo" class="logo"  height="100" src="img/logo.svg">
+<% if(registered){ %>
+<div class="isa_error" style="text-align: center;">
+   User already registed. Email Id is already in use.
+</div><% } %>
+<form class = "signup-form" id="log_in" method="post" action="/signup">
+<legend>Create your trial account for Jutja for 31 days</legend>
+<input id="user_fname" required label="false" name="fname" placeholder="First Name" size="30" style="width:158.5px;display:inline;margin-left:90px;" type="text" value="">
+<input id="user_lname" required label="false" name="lname" placeholder="Last Name" size="30" style="width:158.5px; display:inline;" type="text" value="">
+<input id="user_email" required label="false" name="email" placeholder="Email Address" size="30" type="email" value="">
+<input id="user_password" required label="false" name="password" placeholder="Password" size="30" type="password">
+<input name="commit" type="submit" value="Sign Up">
+<a href="/auth/facebook">
+<img alt="login" class="logo"  height="60" width="328px" src="img/fb-signup.png"></a>
+<div class="footer2">
+<div class="footer2">
+
+</div>
+</form>
+</div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-51082124-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>

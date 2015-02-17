@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<title>Edit a Project
+</title>
+<head>
+	<link rel="stylesheet" type="text/css" href="https://jutja.com/css/button.css">
+	<link rel="stylesheet" type="text/css" href="https://jutja.com/css/semantic.css">
+    <link rel="stylesheet" type="text/css" href="https://jutja.com/css/icon.css">
+  <link rel="stylesheet" type="text/css" href="https://jutja.com/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="https://jutja.com/css/component.css" />
+    <link rel="stylesheet" type="text/css" href="https://jutja.com/css/lucky.css" />
+
+    <script src="https://jutja.com/js/modernizr.custom.js"></script>
+        <style type="text/css" media="screen">
+        #main { top: 50px; position: absolute;}
+    </style>
+</head>
+<body>
+         <nav class="cbp-spmenu cbp-spmenu-horizontal cbp-spmenu-top cbp-spmenu-open" id="cbp-spmenu-s3">
+     <a class="active item" href="https://jutja.com/app">
+        Projects
+      </a>
+      
+      <a class="item" href="https://jutja.com/myinfo">
+         View Profile
+      </a>
+      <a class="logout" style="position:fixed;right:0px;" href="https://jutja.com/logout">
+        Logout
+      </a>
+    </nav> 
+    <div id="main">    <form align="center" action="/project/edit" method="post" enctype="application/x-www-form-urlencoded" class="inverted segment ui form segment" >
+   <div>
+        <label for="name">Name of Project:</label>
+        <input type="text" id="name" name="name" value='<%=project.name%>' >
+       <input type=hidden id="old_id" name= "old_id" value= '<%= project._id%>'>
+       <input type=hidden id="old_name" name= "old_name" value= '<%= project.name%>'>
+    </div>
+    <div class="button">
+        <button type="submit">Submit</button>
+    </div>
+</form> </div>
+
+<script src="https://jutja.com/js/classie.js"></script>
+</body>

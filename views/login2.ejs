@@ -1,0 +1,109 @@
+<html>
+<head>
+<title>Login</title>
+<link rel="stylesheet" type="text/css" href="https://jutja.com/css/component.css" />
+    <link rel="stylesheet" type="text/css" href="https://jutja.com/css/default.css" />
+<link rel="stylesheet" type="text/css" href="css/login.css">
+  <link rel="stylesheet" type="text/css" href="css/reset_password.css">
+  <link rel="stylesheet" type="text/css" href="css/signup.css">
+
+    <link rel="stylesheet" type="text/css" href="https://jutja.com/css/home_boot.css" />
+          <link href="https://jutja.com/css/homestyle.css" rel="stylesheet" id="theme-style">
+
+
+</head>
+<body data-spy="scroll">
+  <script>
+function show(shown, hidden, hidden2) {
+  document.getElementById(shown).style.display='block';
+  document.getElementById(hidden).style.display='none';
+  document.getElementById(hidden2).style.display='none';
+  return false;
+}
+</script>
+ <!-- ******HEADER****** --> 
+    <header id="top" class="header navbar-fixed-top" style="background-color:#3488CF">  
+        <div class="container">            
+            <h1 class="logo pull-left">
+                <a class="scrollto" href="https://jutja.com/" style="text-decoration:none;font-family:Decorative;font-size:25px;">
+                    <img id="logo-image" class="logo-image" src="https://jutja.com/img/logo.svg" alt="Logo">
+
+                    <span class="logo-title">Jutja</span>
+                </a>
+            </h1><!--//logo-->              
+            <nav id="main-nav" class="main-nav navbar-right" role="navigation">
+                <div class="navbar-header">
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button><!--//nav-toggle-->
+                </div><!--//navbar-header-->            
+                <div class="navbar-collapse collapse" id="navbar-collapse">
+                    <ul class="nav navbar-nav" style="font-size:16px;">
+                        <li class="nav-item "><a class="scrollto" href="https://jutja.com/">Home</a></li>
+                        <li class="nav-item "><a class="scrollto" href="#" onclick="return show('1','3','2');">Login</a></li>
+                        <li class="nav-item"><a class="scrollto" href="#" onclick="return show('3','1','2');">Signup</a></li>
+                        <li class="nav-item"><a class="scrollto" href="#" onclick="return show('2','1','3');">Forgot Password</a></li>
+                    </ul><!--//nav-->
+                </div><!--//navabr-collapse-->
+            </nav><!--//main-nav-->           
+        </div>
+    </header><!--//header-->
+<div id="1">
+      <div class="login">
+      <img alt="Jutja-logo" class="logo"  height="100" src="img/logo.svg">
+      <% if(login){ %>
+      <div class="isa_error">
+         Wrong Email or password. Please try again.
+      </div><% } %>
+      <form class = "login-form" id="log_in" method="post">
+      <legend>Welcome back!</legend>
+      <input id="user_email" required label="false" name="email" placeholder="Email Address" size="30" type="text" value="">
+      <input id="user_password" required label="false" name="password" placeholder="Password" size="30" type="password">
+      <input name="commit" type="submit" value="Log In">
+      <a href="/auth/facebook"><img alt="login" class="logo"  height="49.5" src="img/login.png"></a>
+      <div class="footer2">
+      <p>
+      <a  href="#" onclick="return show('2','1','3');" style="color:#47A3DA">Forgot Password?</a>
+      </p>
+      <p>
+      Don't have an account?
+      <a href="#" onclick="return show('3','1','2');" style="color:#000;">Sign Up</a>
+      </p>
+      </div>
+      </form>
+      </div>
+</div>
+<div id="2" style="display:none">
+    <div class="reset">
+    <img alt="Jutja-logo" class="logo"  height="100" src="img/logo.svg">
+    <form class = "reset-form" action="/reset-password" id="log_in" method="GET">
+    <legend>Reset Password</legend>
+    <input id="user_email" required label="false" name="email" placeholder="Email Address" size="30" type="email" value="">
+    <input name="commit" type="submit" value="Reset Password">
+    </form>
+    </div>
+</div>
+<div id="3" style="display:none">
+    <div class="signup">
+    <img alt="Jutja-logo" class="logo"  height="100" src="img/logo.svg">
+    <% if(registered){ %>
+    <div class="isa_error">
+       User already registed. Email Id is already in use.
+    </div><% } %>
+    <form class = "signup-form" id="log_in" method="post">
+    <legend>Create your Jutja Account</legend>
+    <input id="user_fname" required label="false" name="fname" placeholder="First Name" size="30" style="width:158.5px;display:inline;margin-left:90px;" type="text" value="">
+    <input id="user_lname" required label="false" name="lname" placeholder="Last Name" size="30" style="width:158.5px; display:inline;" type="text" value="">
+    <input id="user_email" required label="false" name="email" placeholder="Email Address" size="30" type="email" value="">
+    <input id="user_password" required label="false" name="password" placeholder="Password" size="30" type="password">
+    <input name="commit" type="submit" value="Sign Up">
+    <a href="/auth/facebook">
+    <img alt="login" class="logo"  height="60" width="328px" src="img/fb-signup.png"></a>
+    </form>
+    </div>
+</div>
+</body>
+</html>

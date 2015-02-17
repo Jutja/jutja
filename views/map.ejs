@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jutja.com</title>
+    <link href="https://jutja.com/css/style.css" rel="stylesheet" media="screen">
+    <link href="https://jutja.com/css/delete_node_form.css"rel="stylesheet" >
+    <link href="https://jutja.com/css/intro_form.css"rel="stylesheet" >
+    <link href="https://jutja.com/css/new_node_form.css"rel="stylesheet" >
+    <link href="https://jutja.com/css/create_map.css"rel="stylesheet" >
+    <link href="https://jutja.com/css/err_modal.css"rel="stylesheet" >
+    <link href="https://jutja.com/css/icon.css" rel="stylesheet" >
+    <link href="https://jutja.com/css/lucky.css" rel="stylesheet" >
+    <link href="https://jutja.com/css/bootstrap.css" rel="stylesheet" >
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" rel="stylesheet">
+    <link href="https://jutja.com/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+    <link href="https://jutja.com/css/app_udetails1.css" rel="stylesheet" type="text/css" />  
+    <link rel="stylesheet" href="https://jutja.com/css/bootstrap-tagsinput.css">
+    <script type="text/javascript" src="https://jutja.com/js/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="https://jutja.com/js/jquery.bpopup.min.js"></script>
+    <script type="text/javascript" src="https://jutja.com/js/vivagraph.js"></script>
+    <script type="text/javascript" src="https://jutja.com/js/global.js"></script>
+    <script type="text/javascript" src="https://jutja.com/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://jutja.com/js/functions.js"></script>
+    <script type="text/javascript" src="https://jutja.com/js/exp1.js"></script>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+    <style type="text/css" media="screen">
+        html, body, svg { width: 100%; height: 100%;}
+        .datepicker.dropdown-stat {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: 1000;
+      float: left;
+      display: none;
+      min-width: 160px;
+      list-style: none;
+      background-color: #ffffff;
+      border: 1px solid #ccc;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      -webkit-background-clip: padding-box;
+      -moz-background-clip: padding;
+      background-clip: padding-box;
+      *border-right-width: 2px;
+      *border-bottom-width: 2px;
+      color: #333333;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      line-height: 20px;
+    }
+.datepicker.dropdown-stat th,
+.datepicker.dropdown-stat td {
+  padding: 4px 5px;
+}
+       svg { width: 100%; height: 100%;font-family: "proxima-nova";}
+         #bord {
+          border: 0px;
+        }
+ 
+        #bord {
+          border: 0px;
+        }
+        .button{
+  background-color:#2b91af;
+  border-radius:10px;
+  box-shadow:0 2px 3px rgba(0,0,0,0.3);
+  color:#fff;
+  cursor:pointer;
+  display:inline-block;
+  padding:10px 20px;
+  text-align:center;
+  text-decoration:none
+}
+.button:hover{
+  background-color:#1e1e1e
+}
+
+.button>span{
+  font-size:84%
+}
+
+.button.b-close,.button.bClose{
+  border-radius:4px;
+  box-shadow:none;
+  font:bold 160% sans-serif;
+  padding:0 6px 2px;
+  position:absolute;
+  right:0px;
+  top:0px
+}
+    </style>
+    <link rel="stylesheet" type="text/css" href="https://jutja.com/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="https://jutja.com/css/component.css" />
+    <script src="https://jutja.com/js/modernizr.custom.js"></script>
+    
+</head>
+<body  class="skin-blue" style='width:100%; height: 100%;'>
+  <!--<nav class="cbp-spmenu cbp-spmenu-horizontal cbp-spmenu-top cbp-spmenu-open" id="cbp-spmenu-s3">
+  <a id="showLeftPush" class="item_l">Menu</a>
+      <a class="active item" href="https://jutja.com/app">
+        Projects
+      </a>
+      <a class="item_l" href="https://jutja.com/project/view?id=<%= pid %>">
+         View Maps
+      </a>
+      
+      <a class="item_l" href="https://jutja.com/myinfo">
+         View Profile
+      </a>
+      
+ <a class="logout"  href="https://jutja.com/logout">
+        Logout
+      </a>
+    </nav> 
+    <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left cbp-spmenu-open" id="cbp-spmenu-s1">
+      <h3>JUTJA</h3>
+       <a class="green item_l" id="create" onclick="functions.cr_project()" >
+                 <i class="plus icon item_l" ></i>
+                    Create
+            </a>
+        <a class="green item_l" id="center">
+    <i class="bullseye icon"></i>
+    Center
+  </a>
+  
+  <a class="green item_l" id="pin" onclick="functions.pin()">
+    <i class="pin icon"></i>
+    Pin
+  </a>
+    </nav>    -->  
+    <div id="form"  style="display:none;"  >
+<span class="button b-close">
+<span>X</span></span>
+  <form id="node_form">
+    <h1 id="h1">Editing your new note !!!!</h1>
+    <label>
+      <span>Title of your note:</span>
+      <input id="name" required type="text"  placeholder="Enter the title for your note"/>
+      </label>
+      <label>
+        <span>Additional Info :</span>
+        <textarea id="info"  placeholder="Enter the details about your note"></textarea>
+    </label>
+     <label>
+      <span>Due Date :</span>
+      <div class="input-group date"  >
+            <input type="text" required class="form-control" id="dateForm"><span class="input-group-addon" id="bord"></span>
+        </div>
+    </label>
+      <label>
+      <span>Status :</span>
+      <select style="width: 150px;height: 24px; margin-bottom: 16px; margin-right: 6px;margin-top: 4px;" name="status" id="form_status">
+      <option value="Incomplete" >Incomplete</option>
+      <option value="Completed">Completed</option>
+      <option value="Ongoing">Ongoing</option>
+      <option value="Not Started">Not started</option>
+      </select>
+    </label>
+    <br>
+    <div>
+        <tr>
+        <td>
+      <button type="submit" style="width: 100px;margin-left: 75px;"  id="submit2">Submit</button></td>
+    <td>
+      <button style="width: 100px;margin-left: 50px;" type="reset" id="reset">Reset</button></td>
+        </tr>
+        </div>
+  </form>
+</div>
+
+        
+<form id="create_map" style="display:none;left:50%;">
+<span class="button b-close">
+<span>X</span></span>
+  <h1 id="h1">Building Your Map </h1>
+  <h2><span>Enter details for your map !!!</span></h2>
+  <label>
+  <span>Map Name : </span>
+  <input id="map_name" type="text" required  placeholder=" Enter the name of the map you want to create"/></label>
+  
+  <label>
+    <span>Title of note :</span><input id="cr_name" required type="text" placeholder="Enter title for your first note"/></label>
+  <label>
+  <span>Message :</span>
+  <textarea id="cr_message" placeholder="Enter details about your note"></textarea></label>
+  <label>
+    <span>Due Date :</span>
+    <div class="input-group date"  >
+            <input type="text" required class="form-control" id="dateCreate"><span class="input-group-addon" id="bord"></span>
+        </div>
+    </label>
+      <label>
+      <span>Status :</span>
+      <select style="width: 150px;height: 24px; margin-bottom: 16px; margin-right: 6px;margin-top: 4px;" name="status" id="create_status">
+      <option value="Incomplete" >Incomplete</option>
+      <option value="Completed">Completed</option>
+      <option value="Ongoing">Ongoing</option>
+      <option value="Not Started">Not started</option>
+      </select>
+    </label>
+    <br>
+    <div>
+    <tr>
+    <td>
+      <button type="submit" style="width: 100px;margin-left: 75px;" id="submit2">Submit</button></td>
+    <td>
+      <button style="width: 100px;margin-left: 50px;" type="reset" id="reset">Reset</button></td>
+    </tr>
+    </div>
+  </form>  
+
+ <form id="f"  style="display:none;">
+ <span class="button b-close">
+<span>X</span></span>
+     <h1 id="h1Fr">New Node</h1>
+          <h2 id="h2Fr"><span>Please fill all the details</span></h2>  
+    <label id="button"><tr>
+    <span> <td><a class="button_example " onLoad="clearForms()" onUnload="clearForms()" id="cr">Create</a></td></span>
+    <span> <td><a class="button_example" id="ed">Edit</a></td></span>
+    <span> <td><a class="button_example" id="del">Delete</a></td></span>
+        <span> <td><a class="button_example" id="hide">Hide/Unhide</a></td></span>
+
+    </label>
+  </form>
+        
+  <form id="d"  style="display:none;">
+  <span class="button b-close">
+<span>X</span></span>
+    <h2>Are you sure you want to delete this node?</h2>
+    <button type="submit" id="submit">Delete</button>
+  </form>
+
+ <header class="header">
+            <a href="https://jutja.com" class="logo">
+                Jutja
+            </a>
+            <nav class="navbar navbar-static-top" role="navigation" style="border-radius:0px;">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <div class="navbar-right"  style="height:100%;">
+                    <ul class="nav navbar-nav"  style="height:100%;">
+                    <li class="dropdown user user-menu" style="height:100%;">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height:100%;">
+                                <i class="glyphicon glyphicon-user"></i>
+                               <span>
+                                <% if(user.fname) { %><%=user.fname+' '+user.lname %><% }  %> 
+                                 <i class="caret"></i></span>
+                            </a>
+                             <ul class="dropdown-menu">
+                                <!-- User image -->
+                                <li class="user-header bg-light-blue">
+                                    <img src="https://www.gravatar.com/avatar/<%=user.gravatar%>" class="img-circle" alt="User Image" />
+                                    <p>
+                                       <% if(user.fname) { %><%=user.fname+' '+user.lname %><% }  %> 
+                                        <small id="temp1"> </small>
+                                    </p>
+                                </li>
+                                <!-- Menu Body -->
+                                <!--<li class="user-body">
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">Followers</a>
+                                    </div>
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">Sales</a>
+                                    </div>
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">Friends</a>
+                                    </div>
+                                </li>-->
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="https://jutja.com/myinfo" class="btn btn-default btn-flat">Profile</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="https://jutja.com/logout" class="btn btn-default btn-flat">Sign out</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+
+        <div class="wrapper row-offcanvas row-offcanvas-left">
+         <aside class="left-side sidebar-offcanvas">                
+                <!-- sidebar: style can be found in sidebar.less -->
+                <section class="sidebar">
+                    <!-- Sidebar user panel -->
+                    <div class="user-panel">
+                        <div class="pull-left image">
+                            <img src="https://www.gravatar.com/avatar/<%=user.gravatar%>" class="img-circle" alt="User Image" />
+                        </div>
+                        <div class="pull-left info">
+                           <p>Hello,<%if(user.fname) { %><%=user.fname %><% } else { %><%=user.name %><% } %></p>
+
+                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                        </div>
+                    </div>
+                    <!-- search form -->
+                    <form action="#" method="get" class="sidebar-form">
+                        <div class="input-group">
+                            <input type="text" name="q" class="form-control" placeholder="Search..."/>
+                            <span class="input-group-btn">
+                                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </form>
+                    <!-- /.search form -->
+                    <!-- sidebar menu: : style can be found in sidebar.less -->
+                    <ul class="sidebar-menu">
+                        <li class="active">
+                            <a href="https://jutja.com/app">
+                                <i class="fa fa-dashboard"></i> <span>Projects</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://jutja.com/project/view?id=<%= pid %>">
+                                <i class="fa fa-bolt"></i> <span>Maps</span> 
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-book"></i> <span>Notes</span> 
+                            </a>
+                        </li>
+                        <li>
+                          <a class="green item_l" onclick="functions.cr_project()" >
+                           <i class="plus icon" ></i>
+                                New Map
+                          </a>
+                        </li>
+                        <li>
+                            <a class="green item_l" id="center">
+                            <i class="bullseye icon"></i>
+                            Center
+                          </a>
+                        </li>
+                        <li>
+                          <a class="green item_l" onclick="functions.pin()">
+                            <i class="pin icon"></i>
+                            Pin
+                          </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-th"></i> <span>Timeline</span> <small class="badge pull-right bg-green">new</small>
+                            </a>
+                        </li>
+                        <li>
+                        
+                            <a href="pages/calendar.html">
+                                <i class="fa fa-calendar"></i> <span>Calendar</span>
+                                <small class="badge pull-right bg-red">3</small>
+                            </a>
+                        </li>
+                        <!--<li>
+                            <a href="pages/mailbox.html">
+                                <i class="fa fa-envelope"></i> <span>Mailbox</span>
+                                <small class="badge pull-right bg-yellow">12</small>
+                            </a>
+                        </li>-->
+                    </ul>
+                </section>
+                <!-- /.sidebar -->
+            </aside>
+            <aside class="right-side">                
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>
+                          Notes
+                        <small>Control panel</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="https://jutja.com"><i class="fa fa-dashboard"></i>Home</a></li>
+                        <li><a href="https://jutja.com/app"><i class="fa"></i>Projects</a></li>
+                        <li> <i class="fa " ><a href="https://jutja.com/project/view?id=<%= pid %>"></i> <%= pname %></a></li>
+
+                        <li> <i class="fa " ><a href="#"></i> <%= name %></a></li>
+                        <li class="active">Notes</li>
+                    </ol>
+                    
+                </section>
+
+
+                <!-- Main content -->
+                <div class = "segment">
+                   <div id="graph1">
+                    </div>
+                </div>
+                <div id="123" data-p_i="<%= pid %>" data-m_n="<%= p_n%>"  %>" style="display:hidden;"></div>
+
+
+                
+            </aside><!-- /.right-side -->
+        </div><!-- ./wrapper -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+  <script type="text/javascript" src="https://jutja.com/js/jquery.bpopup.min.js"></script>  
+<script type="text/javascript" src="https://jutja.com/js/classie.js"></script>
+   <script type="text/javascript" src="https://jutja.com/js/app.js"></script>
+<script>
+      $( document ).ready(function() {
+    var today = new Date();
+    today.setDate(today.getDate() );
+    $.fn.datepicker.defaults.format = "dd/mm/yyyy";
+    $(".input-group.date").datepicker("setDate", today);
+    $(".input-group.date").datepicker('update');
+});
+      </script>
+  <script type="text/javascript">
+   // var str= String(<%=user.madeon%>);
+    var a = new Date('<%=user.madeon%>');
+   var final1= a.toUTCString().split(/GMT.*/);
+    document.getElementById("temp1").innerHTML = "Member Since <br> " + final1[0];
+</script>
+</body>
+</html>
+
+
+
+
+
+  <!--<div id="error" style="display:none">
+  <span class="button b-close">
+<span>X</span></span>
+    <h2>Error</h2>
+    <p id="note"></p>
+    <button  id="err_close" onclick="$('#error').bPopup().close();">Close</button>
+  </div>-->
+

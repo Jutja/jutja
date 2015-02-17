@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jutja.com</title>
+        <link href="http://jutja.com/css/modal.css" rel="stylesheet">
+
+       <link href="http://jutja.com/css/pikaday.css" rel="stylesheet" type="text/css" /> 
+
+    <link href="http://jutja.com/css/app_udetails1.css" rel="stylesheet" type="text/css" />  
+    
+    <style type="text/css" media="screen">
+
+        html, body, svg { width: 100%; height: 100%;}
+		body { font-family: "HelveticaNeue","Helvetica-Neue", "Helvetica", "Arial", sans-serif; }
+			.big-link { display:block; margin-top: 100px; text-align: center; font-size: 70px; color: #06f; }
+		</style>
+</head>
+<body onload='display_map()' style='width:100%; height: 100%;' id="graph1">
+
+           <div class="col-lg-5 col-md-5 col-sm-8 col-xs-9 bhoechie-tab-container" id="node_form" data-id="" style="display:none;width:50%">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 bhoechie-tab-menu">
+              <div class="list-group">
+                <a href="#" class="list-group-item active text-center">
+                 <h3><i class="fa fa-info-circle"></i><br>Info</h3>
+                </a>
+                <a href="#" class="list-group-item text-center">
+                 <h3> <i class="fa fa-plus-circle"></i><br>Create</h3>
+                </a>
+                <a href="#" class="list-group-item text-center">
+                 <h3> <i class="fa fa-comments-o"></i><br>Discussion</h3>
+                </a>
+                <a href="#" class="list-group-item text-center">
+                <h3>  <i class="fa fa-edit"></i><br>Edit</h3>
+                </a>
+                <a href="#" class="list-group-item text-center">
+                  <h3><i class="fa fa-trash-o"></i><br>Delete</h3>
+                </a>
+              </div>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 bhoechie-tab">
+                <!-- Info section -->
+                <div class="bhoechie-tab-content active">
+                      <h2 style="margin-top: 40px;font-size:30px;color:#4883da;text-align:center;" id="info_title"></h2>
+                      <hr><br>
+                      <div class="form-group" style = "font-size:20px;">
+                          <label class="col-sm-2 control-label" style="width: 30%; color: gray;">Info</label>
+                          <div class="col-sm-10" style="width:63%">
+                            <p class="form-control-static"  id="info_info"></p>
+                          </div>
+                      </div>
+                      <div class="form-group" style = "font-size:20px;margin-top:15px;">
+                          <label class="col-sm-2 control-label" style="width: 30%; color: gray;">Due_Date</label>
+                          <div class="col-sm-10" style="width:63%">
+                            <p class="form-control-static"  id="info_date"></p>
+                          </div>
+                      </div>
+                      <div class="form-group" style = "font-size:20px;margin-top:15px;">
+                          <label class="col-sm-2 control-label" style="width: 30%; color: gray;">Status</label>
+                          <div class="col-sm-10" style="width:63%">
+                            <p class="form-control-static"  id="info_status"></p>
+                          </div>
+                      </div>
+                        <span style="margin-top:40px;margin-left:10px;float:left;color:#55518a;font-size:16px">Features
+                          <ul style="color:grey;font-size:14px;">
+                            <li>Add new tasks using create option</li>
+                            <li>Discuss with collaborators on tasks*</li>
+                            <li>Edit tasks*</li>
+                            <li>Delete tasks*</li>
+                            <li>Vote on tasks when you work with collaborators*</li>
+                            <li>Hide tasks*</li>
+                          </ul>
+                          <span style="font-size:14px;color: gray;"> sign in to view *features 
+                          </span>
+                        </span>
+                </div>
+                <!-- create search -->
+                <div class="bhoechie-tab-content">
+                      <h2 style="margin-top: 50px;color:#55518a">Create Sub-task</h2>
+                      <hr>
+                      <div class="form-horizontal" style="font-size: 20px;margin-top: 30px;">
+                        <div class="form-group">
+                          <label for="title" class="col-sm-2 control-label">Title</label>
+                          <div class="col-sm-10">
+                          <input  type="text" class="form-control" id="create_title" placeholder="Title">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="info" class="col-sm-2 control-label">Info</label>
+                          <div class="col-sm-10" >
+                            <textarea class="form-control" id="create_info" rows="3" style="height:120px"></textarea>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="datepicker" class="col-sm-2 control-label">Date</label>
+                          <div class="col-sm-10" >
+                            <input  type="text" class="form-control" id="cr_date_picker">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="status" class="col-sm-2 control-label">Status</label>
+                          <div class="col-sm-10" >
+                            <select class="form-control" id="create_dropdown">
+                              <option>Incomplete</option>
+                              <option>Completed</option>
+                              <option>Ongoing</option>
+                              <option>Not Started</option>
+                              <option>Not set</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <div class="col-sm-offset-2 col-sm-10">
+                            <button id="cr_submit" class="btn btn-success">Submit</button>
+                            <!--<button type="reset" class="btn btn-primary">reset</button>-->
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                <!-- discussion section -->
+                <div class="bhoechie-tab-content">
+                   <center>
+                      <h3 style="margin-top: 100px;color:#55518a;padding-left: 20px;padding-right: 20px;">Sign In to discuss the tasks on realtime</h3>
+                    </center>
+                </div>
+    
+                <div class="bhoechie-tab-content">
+                   <center>
+                      <h3 style="margin-top: 100px;color:#55518a;padding-left: 20px;padding-right: 20px;">Sign In to edit the tasks anytime</h3>
+                    </center>
+                </div>
+                <div class="bhoechie-tab-content">
+                    <center>
+                      <h3 style="margin-top: 100px;color:#55518a;padding-left: 20px;padding-right: 20px;">Sign In to delete the tasks</h3>
+                    </center>
+                </div>
+            </div>
+        </div>
+
+       
+     </div>
+      <script type="text/javascript" src="http://jutja.com/js/vivagraph.js"></script>
+    <script type="text/javascript" src="http://jutja.com/demo_modular.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+     <script type="text/javascript" src="http://jutja.com/js/pikaday.js"></script>
+
+      <script type="text/javascript" src="http://jutja.com/js/jquery.bpopup.min.js"></script>  
+  <script src="http://jutja.com/js/bootstrap-tagsinput.js"></script>
+  <script type="text/javascript">
+    var picker_cr = new Pikaday({
+          field: document.getElementById('cr_date_picker') 
+    });
+     $("div.bhoechie-tab-menu>div.list-group>a").click(function(e) {
+            e.preventDefault();
+            $(this).siblings('a.active').removeClass("active");
+            $(this).addClass("active");
+            var index = $(this).index();
+            $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+            $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+        });
+
+</script>
+</body>
+</html>

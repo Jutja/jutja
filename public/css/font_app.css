@@ -1,0 +1,128 @@
+@font-face {
+	font-family: 'jutja-app';
+	src:url('../fonts/jutja-app.eot?-g2tw2d');
+	src:url('../fonts/jutja-app.eot?#iefix-g2tw2d') format('embedded-opentype'),
+		url('../fonts/jutja-app.woff?-g2tw2d') format('woff'),
+		url('../fonts/jutja-app.ttf?-g2tw2d') format('truetype'),
+		url('../fonts/jutja-app.svg?-g2tw2d#jutja-app') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	font-family: 'jutja-app';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-thumbs-o-up:before {
+	content: "\f087";
+}
+.icon-thumbs-o-down:before {
+	content: "\f088";
+}
+.icon-thumbs-up:before {
+	content: "\f164";
+}
+.icon-thumbs-down:before {
+	content: "\f165";
+}
+.icon-user-info:before {
+	content: "\e603";
+}
+.icon-add_collab:before {
+	content: "\e600";
+}
+.icon-add_task:before {
+	content: "\e601";
+}
+.icon-analytics:before {
+	content: "\e602";
+}
+.icon-calculation1:before {
+	content: "\e604";
+}
+.icon-center:before {
+	content: "\e605";
+}
+.icon-circle:before {
+	content: "\e606";
+}
+.icon-del_collab:before {
+	content: "\e608";
+}
+.icon-del_project:before {
+	content: "\e607";
+}
+.icon-del_task:before {
+	content: "\e609";
+}
+.icon-discussion:before {
+	content: "\e60a";
+	font-size: 22px;
+}
+.icon-edit_task:before {
+	content: "\e60b";
+}
+.icon-info_project:before {
+	content: "\e60c";
+	font-size: 19px;
+}
+.icon-info_task:before {
+	content: "\e60d";
+}
+.icon-map:before {
+	content: "\e60e";
+}
+.icon-map_add:before {
+	content: "\e60f";
+}
+.icon-map_back:before {
+	content: "\e610";
+}
+.icon-notification:before {
+	content: "\e611";
+}
+.icon-pin:before {
+	content: "\e612";
+}
+.icon-profile:before {
+	content: "\e613";
+}
+.icon-profile-info:before {
+	content: "\e614";
+}
+.icon-project:before {
+	content: "\e615";
+}
+.icon-project_add:before {
+	content: "\e616";
+}
+.icon-project_back:before {
+	content: "\e617";
+}
+.icon-reset1:before {
+	content: "\e618";
+}
+.icon-resetscale:before {
+	content: "\e619";
+}
+.icon-task_assign:before {
+	content: "\e61a";
+}
+.icon-task_hide:before {
+	content: "\e61b";
+}
+.icon-tour:before {
+	content: "\e61c";
+}
+.icon-send:before {
+	content: "\e61d";
+}

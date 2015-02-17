@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <title>Primus</title>
+  </head>
+  <script src='/js/primus.js'></script>
+  <body>
+    <h1>Primus test</h1>
+    <script>
+    var primus = new Primus();
+    primus.on('open', function open() {
+      console.log("open");
+    });
+    primus.on('data', function(data) {
+        console.log("data : " + data);
+        var li = document.createElement('li');
+        li.innerHTML = JSON.stringify(data);
+        document.getElementById('list').appendChild(li);
+    });
+    var chat = function(event){
+        if(event.keyCode == 13) {
+          var text = document.getElementById("box").value;
+         
+          primus.write(text);
+        }
+    };
+        var join = function(event){
+        if(event.keyCode == 13) {
+          var text = document.getElementById("box2").value;
+         
+          primus.write({ join : text});
+        }
+    };
+            var room = function(event){
+        if(event.keyCode == 13) {
+          var room = document.getElementById("box3").value;
+          var chat = document.getElementById("box4").value;         
+          primus.write({ room : room, chat: chat});
+        }
+    };
+    </script>
+    Echo :
+<input type="textbox" value="" id="box" name="box" onkeydown="chat(event)"/>
+<br>Join :
+<input type="textbox" value="" id="box2" name="box2" onkeydown="join(event)"/>
+<br>Shout on room :
+<input type="textbox" value="" id="box3" name="box3" /> chat -->
+<input type="textbox" value="" id="box4" name="box4" onkeydown="room(event)"/>
+<ul id="list">
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+<header class="header">
+            <a href="https://jutja.com/app" class="logo">
+                Jutja
+            </a>
+            <nav class="navbar navbar-static-top" role="navigation" style="border-radius:0px;">
+                <!-- Sidebar toggle button-->
+                <a class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button" href="#">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <div class="navbar-right"  style="height:100%;">
+                    <ul class="nav navbar-nav"  style="height:100%;">
+                        <li class="dropdown notifications-menu" style="">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                               <i class="icon-notification"></i> 
+                                 <span class="label label-warning" id="label_not" style="display:none;"></span>
+ 
+                            </a>
+                            <ul class="dropdown-menu" id="notification_dropdown" style="width: 400px;">
+                                <li class="header" style="text-align:center;font-size:100%;">Your Notifications</li>
+                                <li>
+                                    <!-- inner menu: contains the actual data -->
+                                    <ul class="menu" id="notific" style="width: 400px;overflow:hidden;height:200px;" >
+                                        <li >
+                                           <a href="#" style="font-size: 18px; text-align: center;font: bold;text-align:left">    
+                                            </a>
+                                            
+                                        </li>
+                                        <!--<li>
+                                            <a href="#">
+                                                <i class="fa fa-warning danger"></i> Very long description here that may not fit into the page and may cause design problems
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-users warning"></i> 5 new members joined
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="#">
+                                                <i class="ion ion-ios7-cart success"></i> 25 sales made
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="ion ion-ios7-person danger"></i> You changed your username
+                                            </a>
+                                        </li>-->
+                                    </ul>
+                                </li>
+                                <!--<li class="footer"><a href="#">View all</a></li>-->
+                            </ul>
+                        </li>
+
+                        <!-- User Account: style can be found in dropdown.less -->
+                        <li class="dropdown user user-menu" style="height:100%;" id="app_dropdownmenu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height:100%;">
+                                <i class="icon-profile"></i>
+                                <span>
+                                <% if(user.fname) { %><%=user.fname+' '+user.lname %><% }  %> 
+                                 <i class="caret"></i></span>
+                            </a>
+                             <ul class="dropdown-menu">
+                                <!-- User image -->
+                                <li class="user-header bg-light-blue">
+                                        <img src="<%=pic%>" class="img-circle" alt="User Image" />  
+                                        <p>
+                                        <% if(user.fname) { %><%=user.fname+' '+user.lname %><% } %> 
+                                        <small id="temp1"> </small>
+                                    </p>
+                                </li>
+                                <!-- Menu Body 
+                                <li class="user-footer">
+                                    <div class="pull-center">
+                                        <a href="#">Team members</a>
+                                    </div>-->
+                                    <!--<div class="col-xs-4 text-center">
+                                        <a href="#">Sales</a>
+                                    </div>
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">Friends</a>
+                                    </div>-->
+                                <!-- </li>
+                                Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="#profile" class="btn btn-default btn-flat">Profile</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="https://jutja.com/logout" class="btn btn-default btn-flat">Sign out</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>

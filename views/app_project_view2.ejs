@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<title>
+</title>
+<head>
+  <link rel="stylesheet" type="text/css" href="https://jutja.com/css/lucky.css">
+  <link rel="stylesheet" href="https://jutja.com/css/bootstrap-tagsinput.css">
+    <link rel="stylesheet" href="https://jutja.com/css/create_map.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://jutja.com/js/jquery.bpopup.min.js"></script>
+  <script type="text/javascript" src="https://jutja.com/js/modernizr.custom.js"></script>
+  <script type="text/javascript" src="https://jutja.com/js/functions.js"></script>
+    <script type="text/javascript" src="https://jutja.com/js/global.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+</head>
+    <style type="text/css" media="screen">
+        #all_proj { top: 50px; position: absolute;}
+        .tag.label.label-info{
+          font-size: 12px;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="https://jutja.com/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="https://jutja.com/css/component.css" />
+    <script src="https://jutja.com/js/modernizr.custom.js"></script>    
+    <style type="text/css">
+     .button{
+  background-color:#2b91af;
+  border-radius:10px;
+  box-shadow:0 2px 3px rgba(0,0,0,0.3);
+  color:#fff;
+  cursor:pointer;
+  display:inline-block;
+  padding:10px 20px;
+  text-align:center;
+  text-decoration:none
+}
+.button:hover{
+  background-color:#1e1e1e
+}
+
+.button>span{
+  font-size:84%
+}
+
+.button.b-close,.button.bClose{
+  border-radius:4px;
+  box-shadow:none;
+  font:bold 160% sans-serif;
+  padding:0 6px 2px;
+  position:absolute;
+  right:0px;
+  top:0px
+}
+    .label-info {
+    background-color: #5BC0DE;
+}
+.label {
+    display: inline;
+    padding: 0.2em 0.6em 0.3em;
+    font-size: 75%;
+    font-weight: bold;
+    line-height: 1;
+    color: #FFF;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25em;
+}
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+body {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    }
+
+    </style>  
+<body>
+</div>
+ <nav class="cbp-spmenu cbp-spmenu-horizontal cbp-spmenu-top cbp-spmenu-open" id="cbp-spmenu-s3">
+     <a class="active item" href="https://jutja.com/app">
+        Projects
+      </a>
+      
+      <a class="item" href="https://jutja.com/myinfo">
+         View Profile
+      </a>
+      <a class="item_l" onclick="functions.editingprojectdetails()">Edit Project Details
+      </a>
+      <a class="item_l" onclick="functions.cr_project()">Create A New Map
+      </a>
+      <a class="logout" style="right:0px;" href="https://jutja.com/logout">
+        Logout
+      </a>
+    </nav> 
+    <h3 id="pid" data-pid='<%=project._id%>'>
+    <a class="proj1" style="margin-top: 60px; margin-bottom: 30px;">Project Name: <%= project.name %> <br>
+    Project Created On :  <%= project.madeon %></a></h3>
+    <!--<td><h2> <a class="projtit">Title of Maps </a></h2></td>-->
+    <tr>
+    <% var k = Object.keys(project.maps); for(var i=0; i<k.length; i++) {%>
+    <td > 
+    <div style="width: 230px; float: left; margin-top: 10px; margin-left: 10px; ">
+    <a class="metro-tile" style="text-align:center;cursor: pointer; width: 230px; height: 110px; display: block; background-color: deepSkyBlue; color: #fff; " href='https://jutja.com/project/maps/view?name=<%=k[i]%>&pid=<%= project._id%>'> <%= k[i] %> </a></div> </td>
+    <% } %>
+    </tr>   
+
+<form id="create_map"  style="display:none;">
+<span class="button b-close">
+<span>X</span></span>
+  <h1 id="h1">Building Your Map </h1>
+  <h2><span>Enter details for your map !!!</span></h2>
+  <label>
+  <span>Map Name : </span>
+  <input id="map_name" type="text" required  name="name" placeholder=" Enter the name of the map "/></label>
+  
+  <label>
+    <span>Title of note :</span><input id="cr_name" required type="text" name="name" placeholder="Enter title for your first note"/></label>
+  <label>
+  <span>Message :</span>
+  <textarea id="cr_message" name="info" placeholder="Enter details about your note"></textarea></label>
+  <label>
+    <span>Due Date :</span>
+    <div class="input-group date"  >
+            <input type="text" required class="form-control" id="dateCreate"><span class="input-group-addon" id="bord"></span>
+        </div>
+    </label>
+    <label>
+      <span>Status :</span>
+      <select class="dropdown-menu" style="width: 150px;height: 24px; margin-bottom: 16px; margin-right: 6px;margin-top: 4px;" name="status" id="create_status">
+      <option value="Incomplete" >Incomplete</option>
+      <option value="Completed">Completed</option>
+      <option value="Ongoing">Ongoing</option>
+      <option value="Not Started">Not started</option>
+      </select>
+    </label>
+    <br>
+    <div>
+    <tr>
+    <td>
+      <button type="submit" style="width: 100px;margin-left: 75px;" id="submit2">Submit</button></td>
+    <td>
+      <button style="width: 100px;margin-left: 50px;" type="reset" id="reset">Reset</button></td>
+    </tr>
+    </div>
+  </form> 
+
+<div id="map_viewform" style="display:none" method="get" >
+<span class="button b-close">
+<span>X</span></span>
+<form id="projedit"  >
+    <h1 id="h1">Edit your Project </h1> 
+    <div>
+        <label for="name"> New name of Project:</label>
+        <input type="text" required  id="name" name="name" value='<%=project.name%>' style="margin-bottom:16px;"><br>
+        <input type=hidden id="old_id" name= "old_id" value= '<%= project._id%>'>
+        <input type=hidden id="old_name" name= "old_name" value= '<%= project.name%>'>
+        <label for="members">Enter the email-id of your team members:     </label>
+
+          <% var str=""; for(var i=0; i<((project.users.editor.length)-1); i++) { 
+            if((project.users.editor[i])==" ")
+              {
+                continue;
+              }
+            str= str  + " , " + String(project.users.editor[i]);  } %>
+    <div>
+    <input type="email" value='<%=str %>' data-role="tagsinput" placeholder="Add Email" />
+    </div>
+      <div>
+        <tr>
+        <td>
+          <button style=" width: 150px;" onclick="submitForm('/project/edit')" type="submit" id="submit2">Submit</button></td>
+        <td>
+          <button style=" width: 150px;" onclick="submitForm('/project/delete')" type="button" id="delete" >Delete Project</button></td>
+        </tr>
+      </div>
+  </form>
+</div>  
+
+  <script src="https://jutja.com/js/tileJs.min.js" type="text/javascript"></script>
+  <script src="https://jutja.com/js/bootstrap-tagsinput.js"></script>
+   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+  <script type="text/javascript">
+       function submitForm(action)
+    {
+        document.getElementById('projedit').action = action;
+        document.getElementById('projedit').submit();
+    }
+    $( document ).ready(function() {
+    var today = new Date();
+    today.setDate(today.getDate() );
+    $.fn.datepicker.defaults.format = "dd/mm/yyyy";
+    $(".input-group.date").datepicker("setDate", today);
+    $(".input-group.date").datepicker('update');
+});
+  </script>
+</body>

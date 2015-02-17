@@ -1,0 +1,185 @@
+.fa-thumbs-o-up:before {
+  content: "\f087";
+}
+.fa-thumbs-o-down:before {
+  content: "\f088";
+}
+[class*=ui-block-]>.ui-btn, [class*=ui-block-]>.ui-select, [class*=ui-block-]>.ui-checkbox, [class*=ui-block-]>.ui-radio, [class*=ui-block-]>button.ui-btn-inline, [class*=ui-block-]>button.ui-btn-icon-notext, .ui-grid-solo>[class*=ui-] {
+margin-right: .3125em;
+margin-left: .3125em;
+}
+.ui-btn-corner-all, .ui-btn.ui-corner-all, .ui-slider-track.ui-corner-all, .ui-flipswitch.ui-corner-all, .ui-li-count {
+-webkit-border-radius: .3125em;
+border-radius: .3125em;
+}
+.ui-grid-b>.ui-block-a, .ui-grid-b>.ui-block-b, .ui-grid-b>.ui-block-c {
+width: 25%;
+}
+.ui-block-a {
+clear: left;
+}
+.ui-block-a, .ui-block-b, .ui-block-c, .ui-block-d, .ui-block-e {
+margin: 0;
+padding: 0;
+border: 0;
+float: left;
+min-height: 1px;
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+}
+.ui-btn {
+font-size: 16px;
+margin: .5em 0;
+padding: .7em 1em;
+display: block;
+position: relative;
+text-align: center;
+text-overflow: ellipsis;
+overflow: hidden;
+white-space: nowrap;
+cursor: pointer;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+.ui-grid-a, .ui-grid-b, .ui-grid-c, .ui-grid-d, .ui-grid-solo {
+overflow: hidden;
+}
+.ui-shadow {
+-webkit-box-shadow: 0 1px 3px rgba(0,0,0,.15);
+-moz-box-shadow: 0 1px 3px rgba(0,0,0,.15);
+box-shadow: 0 1px 3px rgba(0,0,0,.15);
+}
+.ui-btn-corner-all, .ui-corner-all {
+-webkit-background-clip: padding;
+background-clip: padding-box;
+}
+.ui-corner-all {
+-webkit-border-radius: .3125em;
+border-radius: .3125em;
+}
+.ui-btn, label.ui-btn {
+font-weight: 700;
+border-width: 1px;
+border-style: solid;
+}
+body, input, select, textarea, button, .ui-btn {
+font-size: 1em;
+line-height: 1.3;
+font-family: sans-serif;
+}
+.thumbs-up{
+  float:right;font-size:25px;padding: 2px 6px 3px;
+border: 2px outset buttonface;-webkit-appearance: button;color: #6944f2;
+
+}
+.fa-square-o:before {
+  content: "\f096";
+}
+
+.thumbs-down{
+  float:right;font-size:25px;margin-left:5px;padding: 2px 6px 3px;
+border: 2px outset buttonface;-webkit-appearance: button;color: #6944f2;
+}
+.attach{
+  
+  font-size:15px;margin-right:10px;padding: 2px 6px 3px;width:250px;
+border: 2px outset buttonface;-webkit-appearance: button;
+}
+.attach2{
+  
+  float:right;font-size:18px;margin-right:10px;margin-left:10px;padding: 2px 6px 3px;
+border: 2px outset buttonface;-webkit-appearance: button;
+}
+
+.thumbs-up:hover,.thumbs-down:hover{
+  color: #000;cursor: pointer;
+}
+.fa-thumbs-up:before {
+  content: "\f164";
+}
+
+.fa-thumbs-down:before {
+  content: "\f165";
+}
+
+.fa-minus-square:before {
+  content: "\f146";
+}
+.fa-minus-square-o:before {
+  content: "\f147";
+}
+.button-wrap {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.fa-file:before {
+  content: "\f15b";
+}
+    .datepicker.dropdown-stat {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: 1000;
+      float: left;
+      display: none;
+      min-width: 160px;
+      list-style: none;
+      background-color: #ffffff;
+      border: 1px solid #ccc;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      -webkit-background-clip: padding-box;
+      -moz-background-clip: padding;
+      background-clip: padding-box;
+      *border-right-width: 2px;
+      *border-bottom-width: 2px;
+      color: #333333;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 13px;
+      line-height: 20px;
+    }
+.datepicker.dropdown-stat th,
+.datepicker.dropdown-stat td {
+  padding: 4px 5px;
+}
+       svg { width: 100%; height: 100%;font-family: "proxima-nova";}
+         #bord {
+          border: 0px;
+        }
+ 
+.button{
+  background-color:#2b91af;
+  border-radius:10px;
+  box-shadow:0 2px 3px rgba(0,0,0,0.3);
+  color:#fff;
+  cursor:pointer;
+  display:inline-block;
+  padding:10px 20px;
+  text-align:center;
+  text-decoration:none
+}
+.button:hover{
+  background-color:#1e1e1e
+}
+
+.button>span{
+  font-size:84%
+}
+
+.button.b-close,.button.bClose{
+  border-radius:4px;
+  box-shadow:none;
+  font:bold 160% sans-serif;
+  padding:0 6px 2px;
+  position:absolute;
+  right:0px;
+  top:0px
+}

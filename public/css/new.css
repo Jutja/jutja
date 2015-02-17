@@ -1,0 +1,53 @@
+ #proj_inter { top: 50px; position: absolute; }
+            .label-info {
+    background-color: #5BC0DE;
+}
+
+.label {
+    display: inline;
+    padding: 0.2em 0.6em 0.3em;
+    font-size: 75%;
+    font-weight: bold;
+    line-height: 1;
+    color: #FFF;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25em;
+}
+#all_proj { top: 50px; position: absolute;}
+        .tag.label.label-info{
+          font-size: 12px;
+        }
+      
+     .button{
+  background-color:#2b91af;
+  border-radius:10px;
+  box-shadow:0 2px 3px rgba(0,0,0,0.3);
+  color:#fff;
+  cursor:pointer;
+  display:inline-block;
+  padding:10px 20px;
+  text-align:center;
+  text-decoration:none
+}
+.button:hover{
+  background-color:#1e1e1e
+}
+
+.button>span{
+  font-size:84%
+}
+
+.button.b-close,.button.bClose{
+  border-radius:4px;
+  box-shadow:none;
+  font:bold 160% sans-serif;
+  padding:0 6px 2px;
+  position:absolute;
+  right:0px;
+  top:0px
+}
+    .label-info {
+    background-color: #5BC0DE;
+}

@@ -1,0 +1,43 @@
+body, html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+	body{
+
+	background-size:100% 800px;
+	background-repeat:no-repeat;
+	background-color: #ffffff;	}
+	#style1{
+		position: center;
+		text-align: center;
+		top:100px;
+	}
+
+	
+#lEye, #rEye {
+	position: absolute;
+	top: 20%;
+}
+
+#lDot, #rDot {
+	position: absolute;
+	top: 21.5%;
+}
+
+#lEye {
+	left: 50.5%;
+}
+
+#rEye {
+	left: 53%;
+}
+
+#lDot {
+	left: 51%;
+}
+
+#rDot {
+	left: 54%;
+}

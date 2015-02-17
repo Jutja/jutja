@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<title>Create a Project
+</title>
+<head>
+	<link rel="stylesheet" type="text/css" href="https://jutja.com/css/button.css">
+    	<link rel="stylesheet" type="text/css" href="https://jutja.com/css/segment.css">
+    	<link rel="stylesheet" type="text/css" href="https://jutja.com/css/form.css">
+      <link rel="stylesheet" type="text/css" href="https://jutja.com/css/icon.css">
+  <link rel="stylesheet" type="text/css" href="https://jutja.com/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="https://jutja.com/css/component.css" />
+    <link rel="stylesheet" type="text/css" href="https://jutja.com/css/lucky.css" />
+
+    <script src="https://jutja.com/js/modernizr.custom.js"></script>
+            <style type="text/css" media="screen">
+        #main { top: 50px;  position: absolute;}
+    </style>
+</head>
+<body>
+<nav class="cbp-spmenu cbp-spmenu-horizontal cbp-spmenu-top cbp-spmenu-open" id="cbp-spmenu-s3">
+      <a class="active item" href="https://jutja.com/app">
+        Projects
+      </a>
+      
+      <a class="item" href="https://jutja.com/myinfo">
+         View Profile
+      </a>
+      <a class="logout" style="position:fixed;right:0px;" href="https://jutja.com/logout">
+        Logout
+      </a>
+    </nav> 
+<div id="main">
+<form align="center" action="/project/create" id="createProjForm" enctype="application/x-www-form-urlencoded" >
+   <div>
+        <label for="name">Name of Project:</label>
+        <input type="text" id="name" name="name"><br>
+        <label for="members">Add members to project(Editor rights) Enter the emails of your team:</label>
+        <input type="text" id="members" name="members">
+
+    </div>
+    <div class="button">
+        <button type="submit">Submit</button>
+    </div>
+    <div id="result"></div>
+</form> </div>
+<script src="../js/jquery-1.10.2.js"></script>
+<script src="../js/projCreate.js"></script>
+</body>

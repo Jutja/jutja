@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<title>Your Projects
+</title>
+<head>
+<script type="text/javascript" src='https://jutja.com/js/primus.js'></script>
+    <link rel="stylesheet" type="text/css" href="https://jutja.com/css/new.css" />
+    <link rel="stylesheet" href="https://jutja.com/css/pure.css">
+    <link href="https://jutja.com/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+    <link href="https://jutja.com/css/app_udetails1.css" rel="stylesheet" type="text/css" />  
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet"/>
+    <link href="https://jutja.com/css/modal.css" rel="stylesheet">
+    <link href="https://jutja.com/css/pikaday.css" rel="stylesheet" type="text/css" /> 
+    <link href="https://jutja.com/css/tooltip.css" rel="stylesheet" type="text/css" /> 
+    <link href="https://jutja.com/css/timeline.css" rel="stylesheet" type="text/css" /> 
+    <link rel="stylesheet" type="text/css" href="https://jutja.com/css/selectize.default.css">
+
+
+<style type="text/css">
+    svg{
+        height: 100%;
+        width: 100%;
+    }
+    .item_l{
+        cursor:pointer;
+    }
+    ::-webkit-input-placeholder {
+   text-align:center;
+    }
+
+    :-moz-placeholder { /* Firefox 18- */
+       text-align:center;  
+    }
+
+    ::-moz-placeholder {  /* Firefox 19+ */
+       text-align:center;  
+    }
+   
+    /*For table in user info*/
+    table th, table td {
+        padding: 10px 10px 9px;
+        line-height: 18px;
+        text-align: left;
+    }
+    table {
+        width: 70%;
+        margin-bottom: 18px;
+        padding: 0;
+        font-size: 13px;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    .fa-thumbs-o-up:before {
+        content: "\f087";
+    }
+    .fa-thumbs-o-down:before {
+        content: "\f088";
+    }
+    .fa-star:before {
+  content: "\f005";
+}
+    .fa-thumbs-up:before {
+  content: "\f164";
+}
+.fa-thumbs-down:before {
+  content: "\f165";
+}
+</style>
+</head>
+<body  touch-action="auto" class="skin-blue" style="height: 100%;">
+    <% include modal_form %>
+   <% include menu %>
+        <div class="wrapper row-offcanvas row-offcanvas-left" style="height: 100%;">
+         <aside class="left-side sidebar-offcanvas">                
+                <!-- sidebar: style can be found in sidebar.less -->
+                <section class="sidebar">
+                    <!-- Sidebar user panel -->
+                    <div class="user-panel">
+                        <div class="pull-left image" id="user_gravatar" data-gravatar="<%=user.gravatar%>" >
+                            <img src="<%=pic%>" class="img-circle" alt="User Image" />
+                        </div>
+                        <div class="pull-left info" id="user_name" data-name="<% if(user.fname) { %><%=user.fname+' '+user.lname%><% } %> ">
+                            <p >Hello, <%if(user.fname) { %><%=user.fname %><% } else { %><%=user.facebook.name %><% } %></p>
+                            <div id="online">
+                            <a ><i class="fa fa-circle text-success"></i> Online</a></div>
+                        </div>
+                    </div>
+                    <!-- 
+                    <form action="#" method="get" class="sidebar-form">
+                        <div class="input-group">
+                            <input type="text" name="q" class="form-control" placeholder="Search..."/>
+                            <span class="input-group-btn">
+                                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </form>
+                   search form -->
+                    <!-- sidebar menu: : style can be found in sidebar.less -->
+                    <ul class="sidebar-menu" id="left_sidebar">
+                    </ul>
+                </section>
+                <!-- /.sidebar -->
+            </aside>
+            <aside class="right-side" style="height: 100%;">                
+                <!-- Content Header (Page header) -->
+                <section class="content-header"><% if(payment && payment.validity> Date.now()) { %>
+                    <h1 id='right-title'>
+                          Loading
+                        <small>...</small>
+                    </h1>
+                    <ol id='right-address' class="breadcrumb">
+                        <li><a href="https://jutja.com"><i class="fa fa-home"></i> Home</a></li>
+                        <li  class="active">Projects</li>
+
+                    </ol>
+                  <div id = "createProjForm" style="display:none; background-color:#FFF; padding:10px; width:30%;border-radius:5px;min-width:300px">
+                    <h2 style="margin-top: 10px;color:#55518a;text-align:center;">New Project</h2>
+                        <div class='form-group'>
+                            <label for='title' class='col-sm-2 control-label' style="font-size:18px;">Title</label>
+                            <div class='col-sm-10' style='margin-left:5px;'>
+
+                            <input type='text' class='form-control' id='p_name' placeholder='Name of Project'>
+                               
+
+                            </div>
+                        </div>
+                        <div class='form-group' style="margin-top:50px">
+                            <label for='title' class='col-sm-2 control-label' style="font-size:18px;">Info</label>
+                            <div class='col-sm-10' style='margin-left:5px;'>
+                                <textarea class='form-control' id='project_desc' rows="3"> </textarea>
+                            </div>
+                        </div>
+                        <div class='form-group'>
+                            <label for='title' class='col-sm-10 control-label' style="width: 90%;
+                            font-size: 18px; margin-top: 20px;margin-bottom: 12px;">Email-ids of collaborators. Users need to members of jutja prior to the addition.</label>
+                            <div class='form-group'>
+                                <label for='title' class='col-sm-2 control-label' style="font-size:17px;">Owner</label>
+                                <div class='col-sm-10' style='margin-left:5px;'>
+                                    <!--<input type="text" id="member_owner" name="members" data-role="tagsinput" placeholder="Add Email">-->
+                                    <input type="text" id="member_owner" class="demo-default" placeholder="Add Email">
+                                </div>
+                            </div>
+                            <div class='form-group'>
+                                <label for='title' class='col-sm-2 control-label' style="font-size:17px;">Editor</label>
+                                <div class='col-sm-10' style='margin-left:5px;'>
+                                    <!--<input type="text" id="member_editor" name="members" data-role="tagsinput"  placeholder="Add Email">-->
+                                    <input type="text" id="member_editor" class="demo-default" placeholder="Add Email">
+                                </div>
+                            </div>
+                            <div class='form-group'>
+                                <label for='title' class='col-sm-2 control-label' style="font-size:17px;">Viewer</label>
+                                <div class='col-sm-10' style='margin-left:5px;'>
+                                    <!--<input type="text" id="member_viewer" name="members" data-role="tagsinput" placeholder="Add Email">-->
+                                    <input type="text" id="member_viewer" class="demo-default" placeholder="Add Email">
+                                </div>
+                            </div>
+                        </div>
+                            <div class='form-group'><div class='col-sm-offset-2 col-sm-10'>
+                                <button  class='btn btn-success' onclick="call.submit_newProj()">Submit</button>
+                                <button  class='btn btn-primary' style = 'margin-left: 10px;' onclick = 'call.close_newProj()'>Cancel</button></div>
+                            </div>
+                    </div>
+
+                    <div id = "add_collab" style="display:none; background-color:#FFF; padding:10px;border-radius: 5px;width:31%;min-width:300px">
+                        <h2 style="margin-top: 10px;color:#55518a;text-align:center;">Email id of new collaborators.Users need to members of jutja prior to the addition</h2>
+                        <div class="form-horizontal" style="font-size: 20px;margin-top: 30px;">
+                            <div class='form-group'><label for='title' class='col-sm-2 control-label' style='font-size:17px;'>Owner</label>
+                                <div class='col-sm-10' style='margin-left:5px;'><!--<select multiple  id='add_owner' data-role='tagsinput' placeholder="Add email" ></select>-->
+                                 <input type="text" id="add_owner" class="demo-default" placeholder="Add Email">
+                                </div>
+                            </div>
+                            <div class='form-group'><label for='title' class='col-sm-2 control-label' style='font-size:17px;'>Editor</label>
+                                <div class='col-sm-10' style='margin-left:5px;'><!--<select multiple  id='add_editor' data-role='tagsinput' placeholder="Add email" ></select>-->
+                                <input type="text" id="add_editor" class="demo-default" placeholder="Add Email">
+                                </div>
+                            </div>
+                            <div class='form-group'><label for='title' class='col-sm-2 control-label' style='font-size:17px;'>Viewer</label>
+                                <div class='col-sm-10' style='margin-left:5px;'><!--<select multiple  id='add_viewer' data-role='tagsinput' placeholder="Add email" ></select>-->
+                                 <input type="text" id="add_viewer" class="demo-default" placeholder="Add Email">
+                               </div>
+                            </div>
+                            <div class='form-group'><div class='col-sm-offset-2 col-sm-10'>
+                                <button  class='btn btn-success' onclick='call.submit_addCollab()'>Submit</button>
+                                <button  class='btn btn-primary' style = 'margin-left: 10px;' onclick = 'call.closecollab()'>Cancel</button></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- sample modal form-->
+                        <div id = "modal_form" style="display:none; background-color:#FFF; padding:10px;border-radius: 5px;width:25%;min-width:300px;">
+                            <h2 id="modal_title" style="margin-top: 10px;color:#55518a;text-align:center;"></h2>
+                            <div id = "modal_body" class="form-horizontal" style="font-size: 20px;margin-top: 30px;">
+                            </div>
+                        </div>
+                </section>
+
+                <!-- Main content -->
+                <section class="content" id = "main_content" style="height: 100%;">
+                    <div id="tile" class="pure-g" style="height: 100%;">
+                       <!-- <% var k = Object.keys(project); for(var i=0; i<k.length; i++) {%>
+                          <div class="pure-u-1-4 " style=" float: left; margin-top: 10px; margin-left: 10px; ">
+                            <a class="metro-tile " style=" text-align:center; cursor: pointer; width: 98%; height: 110px; display: block; background-color: deepSkyBlue; color: #fff;" id="<%=k[i]%>"  href="#project/<%=k[i]%>"><%= project[k[i]] %>   
+                            </a> 
+                          </div>
+                        <% } %>-->
+                        <img src="https://jutja.com/img/728.GIF" style="margin-top:20%; margin-left:30% ;width: 100px;height: 100px;">
+                    </div>
+                </section><!-- /.content -->
+            </aside><!-- /.right-side -->
+    <!-- ./wrapper -->
+</div>
+<% } else { %>
+                <section class="content" id = "main_content" style="height: 100%;">
+                    Your Account is no longer valid. Either your trial is over or your validity is over.Automated Options to increase validity coming soon.Please contact support@jutja.com for immediate validity extention.
+                </section>
+                <% } %>
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+ <script type="text/javascript" src="https://jutja.com/js/jquery.bpopup.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+  <script src="https://jutja.com/js/tileJs.min.js" type="text/javascript"></script>
+
+    <script src="https://jutja.com/js/app.js" type="text/javascript"></script>
+    <script type="text/javascript" src="https://jutja.com/js/vivagraph.js"></script>
+<script type="text/javascript" src="https://jutja.com/js/graph.js"></script>
+     <script type="text/javascript" src="https://jutja.com/js/pikaday.js"></script>
+   <script type="text/javascript" src='https://jutja.com/js/routie.js'></script>
+   <script type="text/javascript" src="https://jutja.com/js/create_project.js"></script>
+<!--for real time-->
+    <!-- <script type="text/javascript" src="https://jutja.com/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://jutja.com/js/bootstrapValidator.js"></script>-->
+
+<!-- for graph -->
+
+   <script type="text/javascript" src="https://jutja.com/js/jquery.slimscroll.min.js"></script>
+   <script type="text/javascript" src="https://jutja.com/js/Chart.min.js"></script>
+   <!--For mobile touch events-->
+   <script type="text/javascript" src="https://jutja.com/js/hammer.js"></script>
+   <!--For hover events-->
+    <script type="text/javascript" src="https://jutja.com/js/tooltip.js"></script>
+    <!--email select-->
+        <script type="text/javascript" src="https://jutja.com/js/selectize.min.js"></script>
+
+
+<script type="text/javascript">
+    function disNewProj(){
+        $("#createProjForm").fadeIn();  
+    }
+
+    $("div.bhoechie-tab-menu>div.list-group>a").click(function(e) {
+            e.preventDefault();
+            $(this).siblings('a.active').removeClass("active");
+            $(this).addClass("active");
+            var index = $(this).index();
+            $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+            $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+        });
+</script>
+<script type="text/javascript">
+    var picker_cr = new Pikaday({
+          field: document.getElementById('cr_date_picker') 
+    });
+    var picker_ed = new Pikaday({
+          field: document.getElementById('ed_date_picker') 
+    });
+    $('#chat-box').slimscroll({
+        alwaysVisible: true,
+        height: '300px'
+      });
+   // var str= String(<%=user.madeon%>);
+    var a = new Date('<%=user.madeon%>');
+    var final1= a.toUTCString().split(/GMT.*/);
+    document.getElementById("temp1").innerHTML = "Member Since <br> " + final1[0];
+
+    navigator.sayswho= (function(){
+    var ua= navigator.userAgent, tem, 
+    M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+    if(/trident/i.test(M[1])){
+        tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
+        return 'IE '+(tem[1] || '');
+    }
+    if(M[1]=== 'Chrome'){
+        tem= ua.match(/\bOPR\/(\d+)/)
+        if(tem!= null) return 'Opera '+tem[1];
+    }
+    M= M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
+    if((tem= ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);
+    return M.join(' ');
+})();
+    console.log(navigator.sayswho);
+</script>
+<script type="text/javascript">
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                $('#member_owner').selectize({
+                    persist: false,
+                    createOnBlur: true,
+                    valueField: 'email',
+                    labelField: 'email',
+                    create: function (input) {
+                        if (re.test(input)) {
+                            return {email: input};
+                        }
+                        else{
+                            toastr.error("Please type a valid email address");
+                            return false;
+                        }
+                    }
+                });
+                $('#member_editor').selectize({
+                    persist: false,
+                    createOnBlur: true,
+                    valueField: 'email',
+                    labelField: 'email',
+                    create: function (input) {
+                        if (re.test(input)) {
+                            return {email: input};
+                        }
+                        else{
+                            toastr.error("Please type a valid email address");
+                            return false;
+                        }
+                    }
+                });
+                $('#member_viewer').selectize({
+                    persist: false,
+                    createOnBlur: true,
+                    valueField: 'email',
+                    labelField: 'email',
+                    create: function (input) {
+                        if (re.test(input)) {
+                            return {email: input};
+                        }
+                        else{
+                            toastr.error("Please type a valid email address");
+                            return false;
+                        }
+                    }
+                });
+                $('#add_owner').selectize({
+                    persist: false,
+                    createOnBlur: true,
+                    valueField: 'email',
+                    labelField: 'email',
+                    create: function (input) {
+                        if (re.test(input)) {
+                            return {email: input};
+                        }
+                        else{
+                            toastr.error("Please type a valid email address");
+                            return false;
+                        }
+                    }
+                });
+                $('#add_editor').selectize({
+                    persist: false,
+                    createOnBlur: true,
+                    valueField: 'email',
+                    labelField: 'email',
+                    create: function (input) {
+                        if (re.test(input)) {
+                            return {email: input};
+                        }
+                        else{
+                            toastr.error("Please type a valid email address");
+                            return false;
+                        }
+                    }
+                });
+                $('#add_viewer').selectize({
+                    persist: false,
+                    createOnBlur: true,
+                    valueField: 'email',
+                    labelField: 'email',
+                    create: function (input) {
+                        if (re.test(input)) {
+                            return {email: input};
+                        }
+                        else{
+                            toastr.error("Please type a valid email address");
+                            return false;
+                        }
+                    }
+                });
+</script>
+</body>
