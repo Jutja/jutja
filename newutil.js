@@ -21,7 +21,8 @@ var removeusers = function(pid, pname, userids, creator) {
                         if (index === length - 1) {
                             done(null, status);
                         }
-                    } else {
+                    }
+                    else {
                         if (fuser) {
                             if (fuser._id == creator) {
                                 delete fuser.projects[pid];
@@ -32,7 +33,8 @@ var removeusers = function(pid, pname, userids, creator) {
                                         if (index === length - 1) {
                                             done(null, status);
                                         }
-                                    } else {
+                                    }
+                                    else {
                                         status.stat[fuser.email] = "deleted";
                                         status.uid[fuser._id] = fuser.email;
                                         if (index === length - 1) {
@@ -40,7 +42,8 @@ var removeusers = function(pid, pname, userids, creator) {
                                         }
                                     }
                                 });
-                            } else if (fuser.oproj.hasOwnProperty(pid)) {
+                            }
+                            else if (fuser.oproj.hasOwnProperty(pid)) {
                                 delete fuser.oproj[pid];
                                 fuser.markModified('oproj');
                                 fuser.save(function save() {
@@ -49,7 +52,8 @@ var removeusers = function(pid, pname, userids, creator) {
                                         if (index === length - 1) {
                                             done(null, status);
                                         }
-                                    } else {
+                                    }
+                                    else {
                                         status.stat[fuser.email] = "deleted";
                                         status.uid[fuser._id] = fuser.email;
                                         if (index === length - 1) {
@@ -57,13 +61,15 @@ var removeusers = function(pid, pname, userids, creator) {
                                         }
                                     }
                                 });
-                            } else {
+                            }
+                            else {
                                 status.stat[fuser.email] = "already deleted";
                                 if (index === length - 1) {
                                     done(null, status);
                                 }
                             }
-                        } else {
+                        }
+                        else {
                             status.stat[fuser.email] = "User account has been deleted or has been tampered with . Please contact support If the account is still valid";
                             if (index === length - 1) {
                                 done(null, status);
@@ -92,7 +98,8 @@ var removeusers2 = function(pid, pname, emails, creator, not) {
                         if (index === length - 1) {
                             done(null, status);
                         }
-                    } else {
+                    }
+                    else {
                         if (fuser) {
                             if (fuser._id == creator) {
                                 if (not && (not.editbyid != creator)) {
@@ -122,7 +129,8 @@ var removeusers2 = function(pid, pname, emails, creator, not) {
                                         if (index === length - 1) {
                                             done(null, status);
                                         }
-                                    } else {
+                                    }
+                                    else {
                                         status.stat[fuser.email] = "deleted";
                                         status.uid[fuser._id] = fuser.email;
                                         if (index === length - 1) {
@@ -130,7 +138,8 @@ var removeusers2 = function(pid, pname, emails, creator, not) {
                                         }
                                     }
                                 });
-                            } else if (fuser.oproj.hasOwnProperty(pid)) {
+                            }
+                            else if (fuser.oproj.hasOwnProperty(pid)) {
                                 if (not) {
                                     var Nlength = fuser.not.length;
                                     if (!Nlength) {
@@ -159,7 +168,8 @@ var removeusers2 = function(pid, pname, emails, creator, not) {
                                         if (index === length - 1) {
                                             done(null, status);
                                         }
-                                    } else {
+                                    }
+                                    else {
                                         status.stat[fuser.email] = "deleted";
                                         status.uid[fuser._id] = fuser.email;
                                         if (index === length - 1) {
@@ -167,13 +177,15 @@ var removeusers2 = function(pid, pname, emails, creator, not) {
                                         }
                                     }
                                 });
-                            } else {
+                            }
+                            else {
                                 status.stat[fuser.email] = "already deleted";
                                 if (index === length - 1) {
                                     done(null, status);
                                 }
                             }
-                        } else {
+                        }
+                        else {
                             status.stat[fuser.email] = "User account has been deleted or has been tampered with . Please contact support If the account is still valid";
                             if (index === length - 1) {
                                 done(null, status);
@@ -207,7 +219,8 @@ var addusers = function(pid, pname, emails, creator, not) {
                     if (i === length) {
                         done(null, status);
                     }
-                } else {
+                }
+                else {
                     if (fuser) {
                         if (fuser._id == creator) {
                             status.stat[key] = "is the creator";
@@ -241,7 +254,8 @@ var addusers = function(pid, pname, emails, creator, not) {
                                         if (i === length) {
                                             done(null, status);
                                         }
-                                    } else {
+                                    }
+                                    else {
                                         status.stat[key] = "Added";
                                         status.uid[fuser._id] = {
                                             'status': emails[key],
@@ -253,19 +267,22 @@ var addusers = function(pid, pname, emails, creator, not) {
                                         }
                                     }
                                 })
-                            } else {
+                            }
+                            else {
                                 i++;
                                 if (i === length) {
                                     done(null, status);
                                 }
                             }
-                        } else if (fuser.oproj && fuser.oproj.hasOwnProperty(pid)) {
+                        }
+                        else if (fuser.oproj && fuser.oproj.hasOwnProperty(pid)) {
                             status.stat[key] = "User has already been added to this project";
                             i++;
                             if (i === length) {
                                 done(null, status);
                             }
-                        } else {
+                        }
+                        else {
                             if (not) {
                                 var Nlength = fuser.not.length;
                                 if (!Nlength) {
@@ -295,7 +312,8 @@ var addusers = function(pid, pname, emails, creator, not) {
                                     if (i === length) {
                                         done(null, status);
                                     }
-                                } else {
+                                }
+                                else {
                                     status.stat[key] = "Added";
                                     status.uid[fuser._id] = {
                                         'status': emails[key],
@@ -308,7 +326,8 @@ var addusers = function(pid, pname, emails, creator, not) {
                                 }
                             })
                         }
-                    } else {
+                    }
+                    else {
                         status.stat[key] = "User not registered";
                         i++;
                         if (i === length) {
@@ -328,7 +347,8 @@ var addnot = function(event, link, emails, creator, date, type, nid) {
         status.stat = {};
         if (emails.length) {
             var emailz = emails;
-        } else {
+        }
+        else {
             var emailz = Object.keys(emails);
         }
         var length = emailz.length;
@@ -347,7 +367,8 @@ var addnot = function(event, link, emails, creator, date, type, nid) {
                     if (i === length) {
                         done(null, status);
                     }
-                } else {
+                }
+                else {
                     if (fuser) {
                         var Nlength = fuser.not.length;
                         status.stat = {};
@@ -360,7 +381,8 @@ var addnot = function(event, link, emails, creator, date, type, nid) {
                             if (i === length) {
                                 done(null, status);
                             }
-                        } else {
+                        }
+                        else {
                             fuser.not[Nlength] = {
                                 event: event,
                                 owner: {
@@ -382,7 +404,8 @@ var addnot = function(event, link, emails, creator, date, type, nid) {
                                     if (i === length) {
                                         done(null, status);
                                     }
-                                } else {
+                                }
+                                else {
                                     status.stat[key] = "Added";
                                     status.uid[fuser._id] = {
                                         'status': emails[key],
@@ -395,7 +418,8 @@ var addnot = function(event, link, emails, creator, date, type, nid) {
                                 }
                             })
                         }
-                    } else {
+                    }
+                    else {
                         status.stat[key] = "User not registered";
                         i++;
                         if (i === length) {
@@ -421,7 +445,8 @@ var addtasku = function(email, task, index, key) { // key = pid+mapname+indexno.
         }, function(err, fuser) {
             if (err) {
                 status.stat[email] = "Could not be added in user project.Please try again.";
-            } else {
+            }
+            else {
                 if (fuser) {
                     if (fuser.hasOwnProperty('tasks')) {
                         fuser.tasks = {};
@@ -434,7 +459,8 @@ var addtasku = function(email, task, index, key) { // key = pid+mapname+indexno.
                     fuser.save(function save() {
                         if (err) {
                             status.stat[email] = "Task could not be saved in this user's info. Please try again later or contact support";
-                        } else {
+                        }
+                        else {
                             status.stat[email] = "Added";
                             status.uid[fuser._id] = {
                                 'email': email
@@ -442,7 +468,8 @@ var addtasku = function(email, task, index, key) { // key = pid+mapname+indexno.
                             done(null, status);
                         }
                     })
-                } else {
+                }
+                else {
                     status.stat[email] = "User not registered or account deleted";
                 }
             }
@@ -463,14 +490,16 @@ var removetasku = function(email, key) { // key = pid+mapname+indexno. all conca
         }, function(err, fuser) {
             if (err) {
                 status.stat[email] = "Could not be removed";
-            } else {
+            }
+            else {
                 if (fuser) {
                     delete fuser.tasks[key];
                     fuser.markModified('tasks');
                     fuser.save(function save() {
                         if (err) {
                             status.stat[email] = "Task could not be removed from this user's info. Please try again later or contact support";
-                        } else {
+                        }
+                        else {
                             status.stat[email] = "Removed";
                             status.uid[fuser._id] = {
                                 'email': email
@@ -478,7 +507,8 @@ var removetasku = function(email, key) { // key = pid+mapname+indexno. all conca
                             done(null, status);
                         }
                     })
-                } else {
+                }
+                else {
                     status.stat[email] = "User not registered or account deleted";
                 }
             }
@@ -496,20 +526,24 @@ module.exports.findmap = function(user) {
                 done(null, {
                     notice: "please login again"
                 });
-            } else {
+            }
+            else {
                 if (proj) {
                     if (proj.users.hasOwnProperty(user.id) && (proj.users[user.id] === 'editor' || proj.users[user.id] === 'owner' || 'viewer')) {
                         if (proj.maps.hasOwnProperty(user.p.m_n)) {
                             done(null, proj.maps[user.p.m_n]);
-                        } else done(null, {
+                        }
+                        else done(null, {
                             notice: "Map not found"
                         });
-                    } else {
+                    }
+                    else {
                         done(null, {
                             notice: "You Do not have access to this project."
                         })
                     };
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "Project not found"
                     })
@@ -538,7 +572,11 @@ module.exports.createproject = function(uzer) {
                         }
                     }
                     return z;
-                })();
+                }).then(function(value) {
+                    // console.log(value);
+                }, function(err) {
+                    console.error(err.stack);
+                });
                 if (!(member_check)) { //This means the project is not yet create
                     var temp_project = new Project();
                     temp_project.name = uzer.data.name;
@@ -550,7 +588,7 @@ module.exports.createproject = function(uzer) {
                     //temp_project['id'] = user._id ;
                     var status = {};
                     var not_status = {};
-                    co(function * () {
+                    co(function*() {
                         status = yield addusers(temp_project._id, temp_project.name, uzer.data.members, temp_project.createdby);
                         not_status = yield addnot("You were added to Project " + uzer.data.name + " by " + user.email, "project/" + temp_project._id, uzer.data.members, temp_project.createdby, Date.now(), 'add');
                         Object.keys(status.uid).forEach(function(key) {
@@ -565,7 +603,8 @@ module.exports.createproject = function(uzer) {
                                 done(null, {
                                     notice: "Project coudn't be saved, Please try again sometime later"
                                 });
-                            } else {
+                            }
+                            else {
                                 user.projects[temp_project._id] = temp_project.name;
                                 user.markModified('projects');
                                 user.save(function save() {
@@ -581,9 +620,14 @@ module.exports.createproject = function(uzer) {
                                 });
                             }
                         });
-                    })();
+                    }).then(function(value) {
+                        // console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });
                     // addusers(temp_project._id,temp_project.name,uzer.data.members);
-                } else { //THis means the project exists
+                }
+                else { //THis means the project exists
                     done(null, {
                         notice: "You have already created a project with same name, please use a different name"
                     });
@@ -605,7 +649,8 @@ module.exports.userinfo = function(uzer) {
                     done(null, {
                         notice: "please login again , your session seems to have expired"
                     });
-                } else if (user) {
+                }
+                else if (user) {
                     done(null, {
                         fname: user.fname,
                         lname: user.lname,
@@ -616,7 +661,8 @@ module.exports.userinfo = function(uzer) {
                         r_id: user._id,
                         ref: user.ref
                     });
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "user not found."
                     })
@@ -638,11 +684,13 @@ module.exports.usernot = function(uzer) {
                     done(null, {
                         notice: "please login again , your session seems to have expired"
                     });
-                } else if (user) {
+                }
+                else if (user) {
                     done(null, {
                         not: user.not
                     });
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "user not found."
                     })
@@ -663,7 +711,8 @@ module.exports.notread = function(uzer) {
                     done(null, {
                         notice: "please login again , your session seems to have expired"
                     });
-                } else if (user) {
+                }
+                else if (user) {
                     for (var i = 0; i < user.not.length; i++) {
                         if (user.not[i].i_no == uzer.data.i_no) {
                             user.not[i].read = true;
@@ -680,7 +729,8 @@ module.exports.notread = function(uzer) {
                     done(null, {
                         not: user.not
                     });
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "user not found."
                     })
@@ -701,7 +751,8 @@ module.exports.coupun = function(coup) {
                     done(null, {
                         notice: "please login again , your session seems to have expired"
                     });
-                } else if (coup.coupun) {
+                }
+                else if (coup.coupun) {
                     if (recharges.hasOwnProperty('coup.coupun')) {
                         var day = Date(user.validity);
                         day.setDate(day.getDate() + recharges[coup.coupun]);
@@ -715,12 +766,14 @@ module.exports.coupun = function(coup) {
                                 });
                             }
                         })
-                    } else {
+                    }
+                    else {
                         done(null, {
                             notice: "Coupun Code is invalid."
                         });
                     }
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "user not found."
                     })
@@ -742,9 +795,11 @@ module.exports.usertasks = function(uzer) {
                     done(null, {
                         notice: "please login again , your session seems to have expired"
                     });
-                } else if (user) {
+                }
+                else if (user) {
                     done(null, user.tasks);
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "user not found."
                     })
@@ -766,12 +821,14 @@ module.exports.userprojects = function(uzer) {
                     done(null, {
                         notice: "please login again , your session seems to have expired"
                     });
-                } else if (user) {
+                }
+                else if (user) {
                     done(null, {
                         projects: user.projects,
                         oproj: user.oproj
                     });
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "user not found."
                     })
@@ -792,9 +849,10 @@ module.exports.adduserz = function(proj) {
                     done(null, {
                         notice: "please login again , your session seems to have expired"
                     });
-                } else if (project) {
+                }
+                else if (project) {
                     if (proj.data.users && project.users.hasOwnProperty(proj.user) && project.users[proj.user].status == 'owner') {
-                        co(function * () {
+                        co(function*() {
                             var status = yield addusers(project._id, project.name, proj.data.users, project.createdby, {
                                 'event': "You were added to Project " + project.name + " by " + proj.data.addedby,
                                 'link': "project/" + project._id,
@@ -815,21 +873,28 @@ module.exports.adduserz = function(proj) {
                             project.save(function save() {
                                 if (err) {
                                     done(null, "User could not be added. Please try again later");
-                                } else {
+                                }
+                                else {
                                     done(null, {
                                         'users': project.users,
                                         'status': status
                                     });
                                 }
                             });
-                        })();
-                    } else {
+                        }).then(function(value) {
+                            // console.log(value);
+                        }, function(err) {
+                            console.error(err.stack);
+                        });
+                    }
+                    else {
                         done(null, {
                             notice: "No user to add or you don't have the permission"
                         });
 
                     }
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "Project not found."
                     });
@@ -850,9 +915,10 @@ module.exports.removeuserz = function(proj) {
                     done(null, {
                         notice: "please login again , your session seems to have expired"
                     });
-                } else if (project) {
+                }
+                else if (project) {
                     if (proj.data.users && project.users.hasOwnProperty(proj.user) && project.users[proj.user].status == 'owner') {
-                        co(function * () {
+                        co(function*() {
                             var status = yield removeusers2(project._id, project.name, proj.data.users, project.createdby, {
                                 'event': "You were deleted from Project " + project.name + " by " + proj.data.delby,
                                 'link': "project/" + project._id,
@@ -868,18 +934,26 @@ module.exports.removeuserz = function(proj) {
                                 project.save(function save() {
                                     if (err) {
                                         done(null, "User could not be removed. Please try again later");
-                                    } else {
+                                    }
+                                    else {
                                         done(null, project.users);
                                     }
                                 });
-                            } else done(null, status);
-                        })();
-                    } else {
+                            }
+                            else done(null, status);
+                        }).then(function(value) {
+                            // console.log(value);
+                        }, function(err) {
+                            console.error(err.stack);
+                        });
+                    }
+                    else {
                         done(null, {
                             notice: "No user to add or You Don't have the permission."
                         });
                     }
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "Project not found."
                     })
@@ -899,7 +973,8 @@ module.exports.createmap = function(map) {
                 done(null, {
                     notice: "please login again"
                 });
-            } else {
+            }
+            else {
                 if (proj) {
                     if (proj.users.hasOwnProperty(map.creator) && (proj.users[map.creator].status == 'editor' || proj.users[map.creator].status == 'owner')) {
                         if (!proj.maps.hasOwnProperty(map.data.m_n)) {
@@ -923,15 +998,18 @@ module.exports.createmap = function(map) {
                                 }
                                 done(null, map.data.m_n);
                             });
-                        } else done(null, {
+                        }
+                        else done(null, {
                             notice: "You already have map of same name in this project"
                         });
-                    } else {
+                    }
+                    else {
                         done(null, {
                             notice: "You Do not have access to this project.Viewer cannot create a new map."
                         })
                     };
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "Project not found"
                     })
@@ -951,11 +1029,12 @@ module.exports.addnode = function(map) {
                 done(null, {
                     notice: "please login again"
                 });
-            } else {
+            }
+            else {
                 if (proj) {
                     if (proj.users.hasOwnProperty(map.creator) && (proj.users[map.creator].status === 'editor' || proj.users[map.creator].status == 'owner' || proj.users[map.creator].status == 'viewer')) {
                         if (proj.maps.hasOwnProperty(map.data.m_n)) {
-                            co(function * () {
+                            co(function*() {
                                 var length = proj.maps[map.data.m_n]['length'] + 1 || Math.floor(Math.random() * 1000); ///99 is just a random large number
                                 proj.maps[map.data.m_n]['length'] = length;
                                 var task = {
@@ -983,16 +1062,23 @@ module.exports.addnode = function(map) {
                                         'userinfo': addtaskU
                                     });
                                 });
-                            })();
-                        } else done(null, {
+                            }).then(function(value) {
+                                // console.log(value);
+                            }, function(err) {
+                                console.error(err.stack);
+                            });
+                        }
+                        else done(null, {
                             notice: "map not found"
                         });
-                    } else {
+                    }
+                    else {
                         done(null, {
                             notice: "You Do not have access to this project."
                         })
                     };
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "Project not found"
                     })
@@ -1010,11 +1096,12 @@ module.exports.addchat = function(chat) {
                 done(null, {
                     notice: "please login again"
                 });
-            } else {
+            }
+            else {
                 if (proj) {
                     if (proj.users.hasOwnProperty(chat.creator)) {
                         if (proj.maps.hasOwnProperty(chat.data.m_n)) {
-                            co(function * () {
+                            co(function*() {
                                 if (proj.maps[chat.data.m_n][chat.data.i_no].chat) {
                                     var chats = proj.maps[chat.data.m_n][chat.data.i_no].chat;
                                     if (chat.data.mention) {
@@ -1033,7 +1120,8 @@ module.exports.addchat = function(chat) {
                                             not_status = yield addnot("You were mentioned on project " + proj.name + " by " + mention.email, "map/" + proj._id + '_' + chat.data.m_n, mention.targets, proj.createdby, Date.now(), 'men', mention.nid);
                                             console.log(not_status);
                                         }
-                                    } else {
+                                    }
+                                    else {
                                         chats.push({
                                             gravatar: chat.data.chat.gravatar,
                                             time: chat.data.chat.time,
@@ -1050,7 +1138,8 @@ module.exports.addchat = function(chat) {
                                         }
                                         done(null, chats[chats.length - 1]);
                                     });
-                                } else {
+                                }
+                                else {
                                     proj.maps[chat.data.m_n][chat.data.i_no].chat = [];
                                     var chats = proj.maps[chat.data.m_n][chat.data.i_no].chat;
                                     chats.push({
@@ -1069,16 +1158,23 @@ module.exports.addchat = function(chat) {
                                         done(null, chats[chats.length - 1]);
                                     });
                                 }
-                            })();
-                        } else done(null, {
+                            }).then(function(value) {
+                                // console.log(value);
+                            }, function(err) {
+                                console.error(err.stack);
+                            });
+                        }
+                        else done(null, {
                             notice: "map not found"
                         });
-                    } else {
+                    }
+                    else {
                         done(null, {
                             notice: "You Do not have access to this project."
                         })
                     };
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "Project not found"
                     })
@@ -1097,7 +1193,8 @@ module.exports.addvote = function(vote) {
                 done(null, {
                     notice: "please login again"
                 });
-            } else {
+            }
+            else {
                 if (proj) {
                     if (proj.users.hasOwnProperty(vote.creator)) {
                         if (proj.maps.hasOwnProperty(vote.data.m_n)) {
@@ -1117,7 +1214,8 @@ module.exports.addvote = function(vote) {
                                         data: vote.data
                                     });
                                 });
-                            } else {
+                            }
+                            else {
                                 proj.maps[vote.data.m_n][vote.data.i_no].vote = {};
                                 var votes = proj.maps[vote.data.m_n][vote.data.i_no].vote;
                                 votes[vote.data.name + '#' + vote.creator] = vote.data.vote;
@@ -1135,15 +1233,18 @@ module.exports.addvote = function(vote) {
                                     });
                                 });
                             }
-                        } else done(null, {
+                        }
+                        else done(null, {
                             notice: "map not found"
                         });
-                    } else {
+                    }
+                    else {
                         done(null, {
                             notice: "You Do not have access to this project."
                         })
                     };
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "Project not found"
                     })
@@ -1161,7 +1262,8 @@ module.exports.getvote = function(vote) {
                 done(null, {
                     notice: "please login again"
                 });
-            } else {
+            }
+            else {
                 if (proj) {
                     if (proj.users.hasOwnProperty(vote.creator)) {
                         if (proj.maps.hasOwnProperty(vote.data.m_n)) {
@@ -1172,7 +1274,8 @@ module.exports.getvote = function(vote) {
                                     asker: vote.creator,
                                     data: vote.data
                                 });
-                            } else {
+                            }
+                            else {
                                 proj.maps[vote.data.m_n][vote.data.i_no].vote = {};
                                 var votes = proj.maps[vote.data.m_n][vote.data.i_no].vote;
                                 done(null, {
@@ -1181,15 +1284,18 @@ module.exports.getvote = function(vote) {
                                     data: vote.data
                                 });
                             }
-                        } else done(null, {
+                        }
+                        else done(null, {
                             notice: "map not found"
                         });
-                    } else {
+                    }
+                    else {
                         done(null, {
                             notice: "You Do not have access to this project."
                         })
                     };
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "Project not found"
                     })
@@ -1206,22 +1312,26 @@ module.exports.getchat = function(chat) {
         }, function findmap(err, proj) {
             if (err) {
                 done(null, "please login again");
-            } else {
+            }
+            else {
                 if (proj) {
                     if (proj.users.hasOwnProperty(chat.creator)) {
                         if (proj.maps.hasOwnProperty(chat.data.m_n)) {
                             if (proj.maps[chat.data.m_n][chat.data.i_no].chat) {
                                 done(null, proj.maps[chat.data.m_n][chat.data.i_no].chat);
                             }
-                        } else done(null, {
+                        }
+                        else done(null, {
                             notice: "map not found"
                         });
-                    } else {
+                    }
+                    else {
                         done(null, {
                             notice: "You Do not have access to this project."
                         })
                     };
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "Project not found"
                     })
@@ -1241,12 +1351,13 @@ module.exports.delnode = function(map) {
                 done(null, {
                     notice: "please login again"
                 });
-            } else {
+            }
+            else {
                 if (proj) {
                     if (proj.users.hasOwnProperty(map.editor) && proj.users[map.editor].status === 'owner') {
                         if (proj.maps.hasOwnProperty(map.data.m_n)) {
                             if (map.data.deleted.length) {
-                                co(function * () {
+                                co(function*() {
                                     for (var i = map.data.deleted.length - 1; i >= 0; i--) {
                                         var userinfo = {};
                                         if (proj.maps[map.data.m_n][map.data.deleted[i]].assign != 'None') {
@@ -1275,17 +1386,24 @@ module.exports.delnode = function(map) {
                                             'userinfo': userinfo
                                         });
                                     });
-                                })();
+                                }).then(function(value) {
+                                    // console.log(value);
+                                }, function(err) {
+                                    console.error(err.stack);
+                                });
                             }
-                        } else done(null, {
+                        }
+                        else done(null, {
                             notice: "Map not found"
                         });
-                    } else {
+                    }
+                    else {
                         done(null, {
                             notice: "You Do not have access to this project."
                         })
                     };
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "Project not found"
                     })
@@ -1304,7 +1422,8 @@ module.exports.editnode = function(map) {
                 done(null, {
                     notice: "please login again"
                 });
-            } else {
+            }
+            else {
                 if (proj) {
                     if (proj.users.hasOwnProperty(map.editor) && (proj.users[map.editor].status === 'editor' || proj.users[map.editor].status === 'owner')) {
                         if (proj.maps.hasOwnProperty(map.data.m_n)) {
@@ -1314,7 +1433,7 @@ module.exports.editnode = function(map) {
                             proj.maps[map.data.m_n][map.data.i_no].due_date = map.data.due_date;
                             proj.maps[map.data.m_n][map.data.i_no].status = map.data.status;
                             proj.maps[map.data.m_n][map.data.i_no].assign = map.data.assign;
-                            co(function * () {
+                            co(function*() {
                                 if (old_assign != map.data.assign) {
                                     var userinfo = {}
                                     if (!(map.data.assign == 'None')) {
@@ -1336,16 +1455,23 @@ module.exports.editnode = function(map) {
                                         'userinfo': userinfo
                                     });
                                 });
-                            })();
-                        } else done(null, {
+                            }).then(function(value) {
+                                // console.log(value);
+                            }, function(err) {
+                                console.error(err.stack);
+                            });
+                        }
+                        else done(null, {
                             notice: "map not found"
                         });
-                    } else {
+                    }
+                    else {
                         done(null, {
                             notice: "You Do not have access to this project."
                         })
                     };
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "Project not found"
                     })
@@ -1369,12 +1495,14 @@ module.exports.findproject = function(project) {
                 if (proj) {
                     if (proj.users.hasOwnProperty(project.creator)) {
                         done(null, JSON.stringify(proj));
-                    } else {
+                    }
+                    else {
                         done(null, {
                             notice: "You Do not have access to the requested Project"
                         });
                     }
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "project not found or was deleted"
                     })
@@ -1404,12 +1532,14 @@ module.exports.editmap = function(project) {
                             }
                             done(null, proj.maps[project.data.new_m_n]);
                         });
-                    } else {
+                    }
+                    else {
                         done(null, {
                             notice: "You Do not have access to the requested Project"
                         });
                     }
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "project not found or was deleted"
                     })
@@ -1439,12 +1569,14 @@ module.exports.resetmap = function(project) {
                             }
                             done(null, proj.maps[project.data.m_n]);
                         });
-                    } else {
+                    }
+                    else {
                         done(null, {
                             notice: "You Do not have access to the requested Project"
                         });
                     }
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "Project not found or was deleted"
                     })
@@ -1474,12 +1606,14 @@ module.exports.deletemap = function(project) {
                             }
                             done(null, proj.maps);
                         });
-                    } else {
+                    }
+                    else {
                         done(null, {
                             notice: "You Do not have access to the requested Project.Editor and Viewer cannot delete a Map."
                         });
                     }
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "project not found or was deleted"
                     })
@@ -1502,7 +1636,7 @@ module.exports.deleteproject = function(project) {
                 if (proj) {
                     if (proj.users.hasOwnProperty(project.owner) && proj.users[project.owner].status === 'owner') {
                         var name = proj.name;
-                        co(function * () {
+                        co(function*() {
                             var status = yield removeusers(proj._id, proj.name, proj.users, proj.createdby);
                             proj.remove();
                             done(null, {
@@ -1510,13 +1644,19 @@ module.exports.deleteproject = function(project) {
                                 status: status,
                                 name: name
                             });
-                        })();
-                    } else {
+                        }).then(function(value) {
+                            // console.log(value);
+                        }, function(err) {
+                            console.error(err.stack);
+                        });
+                    }
+                    else {
                         done(null, {
                             notice: "You Do not have access to the requested Project.Editor and Viewer cannot delete a Project. "
                         });
                     }
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "project not found or was deleted"
                     })
@@ -1694,7 +1834,8 @@ module.exports.firstproject = function(user) {
                 done(null, {
                     notice: "Demo Project coudn't be saved, its your turn to learn and make one yourself."
                 });
-            } else {
+            }
+            else {
 
                 done(null, temp_project._id);
             }

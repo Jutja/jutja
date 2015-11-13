@@ -6,7 +6,9 @@ var session = require('koa-generic-session');
 var RedisStore = require('koa-redis');
 var Primus = require('primus');
 var validator = require('validator');
-var redisstore = new RedisStore({'port': 6379});
+var redisstore = new RedisStore({
+    'port': 6379
+});
 var co = require('co');
 var Rooms = require('primus-rooms');
 var compress = require('koa-compressor');
@@ -54,17 +56,18 @@ app.use(session({
 
 // development only
 if ('development' == app.env) {
-        config.database.port = 27017;
-        config.database.url = '127.0.0.1';
-        config.database.username = '';
-    }
+    config.database.port = 27017;
+    config.database.url = '127.0.0.1';
+    config.database.username = '';
+}
 if (config.database.username) {
     mongoose.connect('mongodb://' + config.database.username + ':' + config.database.password + '@' + config.database.url + ':' + config.database.port + '/test');
     var db = mongoose.connection;
     db.once('open', function callback() {
         console.log("MongoDB Connection is opened");
     });
-} else {
+}
+else {
     mongoose.connect('mongodb://' + config.database.url + ':' + config.database.port + '/test');
     var db = mongoose.connection;
     db.once('open', function callback() {
@@ -141,20 +144,23 @@ primus.on('connection', function(spark) {
     var sis = sss['koa.sid'];
     var prefix = 'koa:sess:';
     var ses;
-    co(function * () {
+    co(function* () {
         try {
             ses = yield redisstore.get(prefix + sis);
 
             if (ses) {
                 //console.log(ses); 
                 spark.user = ses.passport.user;
-            } else {
+            }
+            else {
                 spark.end();
             }
-        } catch (err) {
+        }
+        catch (err) {
             if (err.code === 'ENOENT') {
                 console.log('get session error, code = ENOENT')
-            } else {
+            }
+            else {
                 spark.end();
                 return {
                     status: 500,
@@ -172,7 +178,7 @@ primus.on('connection', function(spark) {
         switch (packet.action) {
             case "user_not":
                 {
-                    co(function * () {
+                    co(function*() {
                         var user = spark.user;
                         var uzer = yield user_not(user);
                         if (uzer.notice) {
@@ -180,18 +186,23 @@ primus.on('connection', function(spark) {
                                 action: "notice",
                                 data: uzer.notice
                             });
-                        } else {
+                        }
+                        else {
                             spark.write({
                                 action: "user_not",
                                 data: uzer
                             })
                         }
-                    })();
+                    }).then(function(value) {
+                        console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });
                 }
                 break;
             case "open_map":
                 {
-                    co(function * () {
+                    co(function*() {
                         var user = {};
                         user.id = spark.user;
                         user.p = packet.data;
@@ -201,7 +212,8 @@ primus.on('connection', function(spark) {
                                 action: "notice",
                                 data: map.notice
                             });
-                        } else {
+                        }
+                        else {
                             if (~spark.rooms().indexOf(packet.scope.pid)) {
                                 spark.room(packet.scope.pid).write({
                                     action: "open_map",
@@ -214,7 +226,8 @@ primus.on('connection', function(spark) {
                                         pid: packet.scope.pid
                                     }
                                 });
-                            } else {
+                            }
+                            else {
                                 spark.join(packet.scope.pid, function() {
                                     spark.room(packet.scope.pid).write({
                                         action: "open_map",
@@ -230,12 +243,15 @@ primus.on('connection', function(spark) {
                                 });
                             }
                         }
-                    })();
+                    }).then(function(value) {
+                        console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });
                 }
                 break;
             case "join_room":
                 {
-                    https: //github.com/bhanuc/jutja/issues/90
                     if (~spark.rooms().indexOf(packet.scope.pid)) {
                         spark.room(packet.scope.pid).write({
                             action: "join_room",
@@ -244,7 +260,8 @@ primus.on('connection', function(spark) {
                                 pid: packet.scope.pid
                             }
                         });
-                    } else {
+                    }
+                    else {
                         spark.join(packet.scope.pid, function() {
                             spark.room(packet.scope.pid).write({
                                 action: "join_room",
@@ -264,7 +281,8 @@ primus.on('connection', function(spark) {
                             action: "get_id",
                             id: spark.user
                         });
-                    } else {
+                    }
+                    else {
                         spark.write({
                             action: "get_id",
                             id: null
@@ -274,7 +292,7 @@ primus.on('connection', function(spark) {
                 break;
             case "add_users":
                 {
-                    co(function * () {
+                    co(function*() {
                         var proj = {};
                         proj.user = spark.user;
                         proj.data = packet.data;
@@ -285,7 +303,8 @@ primus.on('connection', function(spark) {
                                 data: stat.notice,
                                 stat: stat.stat
                             });
-                        } else {
+                        }
+                        else {
                             spark.write({
                                 action: "add_users",
                                 data: stat,
@@ -296,12 +315,16 @@ primus.on('connection', function(spark) {
                                 }
                             })
                         }
-                    })();
+                    }).then(function(value) {
+                        console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });
                 }
                 break;
             case "remove_users":
                 {
-                    co(function * () {
+                    co(function*() {
                         var proj = {};
                         proj.user = spark.user;
                         proj.data = packet.data;
@@ -311,7 +334,8 @@ primus.on('connection', function(spark) {
                                 action: "notice",
                                 data: stat.notice
                             });
-                        } else {
+                        }
+                        else {
                             spark.write({
                                 action: "remove_users",
                                 data: stat,
@@ -322,12 +346,16 @@ primus.on('connection', function(spark) {
                                 }
                             })
                         }
-                    })();
+                    }).then(function(value) {
+                        console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });;
                 }
                 break;
             case "user_info":
                 {
-                    co(function * () {
+                    co(function*() {
                         var user = spark.user;
                         var uzer = yield user_info(user);
                         if (uzer.notice) {
@@ -335,18 +363,23 @@ primus.on('connection', function(spark) {
                                 action: "notice",
                                 data: uzer.notice
                             });
-                        } else {
+                        }
+                        else {
                             spark.write({
                                 action: "user_info",
                                 data: uzer
                             })
                         }
-                    })();
+                    }).then(function(value) {
+                        console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });
                 }
                 break;
             case "not_read":
                 {
-                    co(function * () {
+                    co(function*() {
                         var user = {}
                         user.id = spark.user;
                         user.data = packet.data;
@@ -356,18 +389,23 @@ primus.on('connection', function(spark) {
                                 action: "notice",
                                 data: uzer.notice
                             });
-                        } else {
+                        }
+                        else {
                             spark.write({
                                 action: "not_read",
                                 data: uzer
                             })
                         }
-                    })();
+                    }).then(function(value) {
+                        console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });
                 }
                 break;
             case "user_tasks":
                 {
-                    co(function * () {
+                    co(function*() {
                         var user = {};
                         user = spark.user;
                         var user = yield user_tasks(user);
@@ -376,18 +414,23 @@ primus.on('connection', function(spark) {
                                 action: "notice",
                                 data: user.notice
                             });
-                        } else {
+                        }
+                        else {
                             spark.write({
                                 action: "user_task",
                                 data: user
                             })
                         }
-                    })();
+                    }).then(function(value) {
+                        console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });
                 }
                 break;
             case "user_projects":
                 {
-                    co(function * () {
+                    co(function*() {
                         var user = {};
                         user = spark.user;
                         var user = yield user_projects(user);
@@ -396,18 +439,23 @@ primus.on('connection', function(spark) {
                                 action: "notice",
                                 data: user.notice
                             });
-                        } else {
+                        }
+                        else {
                             spark.write({
                                 action: "user_projects",
                                 data: user
                             })
                         }
-                    })();
+                    }).then(function(value) {
+                        console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });
                 }
                 break;
             case "collaborator":
                 {
-                    co(function * () {
+                    co(function*() {
                         var proj = {};
                         proj.creator = spark.user;
                         proj.data = packet.data;
@@ -417,18 +465,23 @@ primus.on('connection', function(spark) {
                                 action: "notice",
                                 data: project.notice
                             });
-                        } else {
+                        }
+                        else {
                             spark.write({
                                 action: "collaborator",
                                 data: project
                             });
                         }
-                    })();
+                    }).then(function(value) {
+                        console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });
                 }
                 break;
             case "new_project":
                 {
-                    co(function * () {
+                    co(function*() {
                         var user = {};
                         user.id = spark.user;
                         user.data = packet.data;
@@ -438,18 +491,23 @@ primus.on('connection', function(spark) {
                                 action: "notice",
                                 data: proj.notice
                             });
-                        } else {
+                        }
+                        else {
                             spark.write({
                                 action: "new_project",
                                 data: proj
                             })
                         }
-                    })();
+                    }).then(function(value) {
+                        console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });
                 }
                 break;
             case "new_map":
                 {
-                    co(function * () {
+                    co(function*() {
                         var map = {};
                         map.creator = spark.user;
                         map.data = packet.data;
@@ -459,7 +517,8 @@ primus.on('connection', function(spark) {
                                 action: "notice",
                                 data: mapa.notice
                             });
-                        } else {
+                        }
+                        else {
                             if (~spark.rooms().indexOf(packet.scope.pid)) {
                                 spark.room(packet.scope.pid).write({
                                     action: "new_map",
@@ -468,7 +527,8 @@ primus.on('connection', function(spark) {
                                         pid: packet.scope.pid
                                     }
                                 });
-                            } else {
+                            }
+                            else {
                                 spark.join(packet.scope.pid, function() {
                                     spark.room(packet.scope.pid).write({
                                         action: "new_map",
@@ -480,12 +540,16 @@ primus.on('connection', function(spark) {
                                 });
                             }
                         }
-                    })();
+                    }).then(function(value) {
+                        console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });
                 }
                 break;
             case "del_node":
                 {
-                    co(function * () {
+                    co(function*() {
                         var node = {};
                         node.editor = spark.user;
                         node.data = packet.data;
@@ -495,7 +559,8 @@ primus.on('connection', function(spark) {
                                 action: "notice",
                                 data: mapa.notice
                             });
-                        } else {
+                        }
+                        else {
                             if (~spark.rooms().indexOf(packet.scope.pid)) {
                                 spark.room(packet.scope.pid).write({
                                     action: "del_node",
@@ -506,7 +571,8 @@ primus.on('connection', function(spark) {
                                         m_n: packet.scope.m_n
                                     }
                                 });
-                            } else {
+                            }
+                            else {
                                 spark.join(packet.scope.pid, function() {
                                     spark.room(packet.scope.pid).write({
                                         action: "del_node",
@@ -520,12 +586,16 @@ primus.on('connection', function(spark) {
                                 });
                             }
                         }
-                    })();
+                    }).then(function(value) {
+                        console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });
                 }
                 break;
             case "reset_map":
                 {
-                    co(function * () {
+                    co(function*() {
                         var map = {};
                         map.editor = spark.user;
                         map.data = packet.data;
@@ -535,7 +605,8 @@ primus.on('connection', function(spark) {
                                 action: "notice",
                                 data: mapa.notice
                             });
-                        } else {
+                        }
+                        else {
                             if (~spark.rooms().indexOf(packet.scope.pid)) {
                                 spark.room(packet.scope.pid).write({
                                     action: "reset_map",
@@ -545,7 +616,8 @@ primus.on('connection', function(spark) {
                                         m_n: packet.scope.m_n
                                     }
                                 });
-                            } else {
+                            }
+                            else {
                                 spark.join(packet.scope.pid, function() {
                                     spark.room(packet.scope.pid).write({
                                         action: "reset_map",
@@ -558,12 +630,16 @@ primus.on('connection', function(spark) {
                                 });
                             }
                         }
-                    })();
+                    }).then(function(value) {
+                        console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });
                 }
                 break;
             case "view_project":
                 {
-                    co(function * () {
+                    co(function*() {
                         var proj = {};
                         proj.creator = spark.user;
                         proj.data = packet.data;
@@ -573,18 +649,23 @@ primus.on('connection', function(spark) {
                                 action: "notice",
                                 data: project.notice
                             });
-                        } else {
+                        }
+                        else {
                             spark.write({
                                 action: "view_project",
                                 data: project
                             });
                         }
-                    })();
+                    }).then(function(value) {
+                        console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });
                 }
                 break;
             case "add_node":
                 {
-                    co(function * () {
+                    co(function*() {
                         var node = {};
                         node.creator = spark.user;
                         node.data = packet.data;
@@ -594,7 +675,8 @@ primus.on('connection', function(spark) {
                                 action: "notice",
                                 data: new_node.notice
                             });
-                        } else {
+                        }
+                        else {
                             if (~spark.rooms().indexOf(packet.scope.pid)) {
                                 spark.room(packet.scope.pid).write({
                                     action: "add_node",
@@ -604,7 +686,8 @@ primus.on('connection', function(spark) {
                                         m_n: packet.scope.m_n
                                     }
                                 });
-                            } else {
+                            }
+                            else {
                                 spark.join(packet.scope.pid, function() {
                                     spark.room(packet.scope.pid).write({
                                         action: "add_node",
@@ -617,12 +700,16 @@ primus.on('connection', function(spark) {
                                 });
                             }
                         }
-                    })();
+                    }).then(function(value) {
+                        console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });
                 }
                 break;
             case "chat":
                 {
-                    co(function * () {
+                    co(function*() {
                         var chat = {};
                         chat.creator = spark.user;
                         chat.data = packet.data;
@@ -633,7 +720,8 @@ primus.on('connection', function(spark) {
                                 action: "notice",
                                 data: chata.notice
                             });
-                        } else {
+                        }
+                        else {
                             if (~spark.rooms().indexOf(packet.scope.pid)) {
                                 spark.room(packet.scope.pid).write({
                                     action: "chat",
@@ -644,7 +732,8 @@ primus.on('connection', function(spark) {
                                     },
                                     i_no: chat.data.i_no
                                 });
-                            } else {
+                            }
+                            else {
                                 spark.join(packet.scope.pid, function() {
                                     spark.room(packet.scope.pid).write({
                                         action: "chat",
@@ -657,12 +746,16 @@ primus.on('connection', function(spark) {
                                 });
                             }
                         }
-                    })();
+                    }).then(function(value) {
+                        console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });
                 }
                 break;
             case "vote":
                 {
-                    co(function * () {
+                    co(function*() {
                         var vote = {};
                         vote.creator = spark.user;
                         vote.data = packet.data;
@@ -672,7 +765,8 @@ primus.on('connection', function(spark) {
                                 action: "notice",
                                 data: chata.notice
                             });
-                        } else {
+                        }
+                        else {
                             if (~spark.rooms().indexOf(packet.scope.pid)) {
                                 spark.room(packet.scope.pid).write({
                                     action: "vote",
@@ -682,7 +776,8 @@ primus.on('connection', function(spark) {
                                         m_n: packet.scope.m_n
                                     }
                                 });
-                            } else {
+                            }
+                            else {
                                 spark.join(packet.scope.pid, function() {
                                     spark.room(packet.scope.pid).write({
                                         action: "vote",
@@ -695,12 +790,16 @@ primus.on('connection', function(spark) {
                                 });
                             }
                         }
-                    })();
+                    }).then(function(value) {
+                        console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });
                 }
                 break;
             case "get_vote":
                 {
-                    co(function * () {
+                    co(function*() {
                         var vote = {};
                         vote.creator = spark.user;
                         vote.data = packet.data;
@@ -710,7 +809,8 @@ primus.on('connection', function(spark) {
                                 action: "notice",
                                 data: chata.notice
                             });
-                        } else {
+                        }
+                        else {
                             if (~spark.rooms().indexOf(packet.scope.pid)) {
                                 spark.room(packet.scope.pid).write({
                                     action: "get_vote",
@@ -720,7 +820,8 @@ primus.on('connection', function(spark) {
                                         m_n: packet.scope.m_n
                                     }
                                 });
-                            } else {
+                            }
+                            else {
                                 spark.join(packet.scope.pid, function() {
                                     spark.room(packet.scope.pid).write({
                                         action: "get_vote",
@@ -733,12 +834,16 @@ primus.on('connection', function(spark) {
                                 });
                             }
                         }
-                    })();
+                    }).then(function(value) {
+                        console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });
                 }
                 break;
             case "get_chat":
                 {
-                    co(function * () {
+                    co(function*() {
                         var chat = {};
                         chat.creator = spark.user;
                         chat.data = packet.data;
@@ -748,7 +853,8 @@ primus.on('connection', function(spark) {
                                 action: "notice",
                                 data: chata.notice
                             });
-                        } else {
+                        }
+                        else {
                             if (~spark.rooms().indexOf(packet.scope.pid)) {
                                 spark.room(packet.scope.pid).write({
                                     action: "get_chat",
@@ -758,7 +864,8 @@ primus.on('connection', function(spark) {
                                         m_n: packet.scope.m_n
                                     }
                                 });
-                            } else {
+                            }
+                            else {
                                 spark.join(packet.scope.pid, function() {
                                     spark.room(packet.scope.pid).write({
                                         action: "get_chat",
@@ -771,12 +878,16 @@ primus.on('connection', function(spark) {
                                 });
                             }
                         }
-                    })();
+                    }).then(function(value) {
+                        console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });
                 }
                 break;
             case "edit_node":
                 { //tobedone
-                    co(function * () {
+                    co(function*() {
                         var node = {};
                         node.editor = spark.user;
                         node.data = packet.data;
@@ -786,7 +897,8 @@ primus.on('connection', function(spark) {
                                 action: "notice",
                                 data: new_node.notice
                             });
-                        } else {
+                        }
+                        else {
                             if (~spark.rooms().indexOf(packet.scope.pid)) {
                                 spark.room(packet.scope.pid).write({
                                     action: "edit_node",
@@ -796,7 +908,8 @@ primus.on('connection', function(spark) {
                                         m_n: packet.scope.m_n
                                     }
                                 });
-                            } else {
+                            }
+                            else {
                                 spark.join(packet.scope.pid, function() {
                                     spark.room(packet.scope.pid).write({
                                         action: "edit_node",
@@ -809,12 +922,16 @@ primus.on('connection', function(spark) {
                                 });
                             }
                         }
-                    })();
+                    }).then(function(value) {
+                        console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });
                 }
                 break;
             case "delete_map":
                 {
-                    co(function * () {
+                    co(function*() {
                         var node = {};
                         node.editor = spark.user;
                         node.data = packet.data;
@@ -824,19 +941,24 @@ primus.on('connection', function(spark) {
                                 action: "notice",
                                 data: new_node.notice
                             });
-                        } else {
+                        }
+                        else {
                             spark.write({
                                 action: "delete_map",
                                 data: new_node
                             })
                         }
-                    })();
+                    }).then(function(value) {
+                        console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });
                 }
                 break;
 
             case "delete_project":
                 {
-                    co(function * () {
+                    co(function*() {
                         var proj = {};
                         proj.owner = spark.user;
                         proj.data = packet.data;
@@ -846,18 +968,23 @@ primus.on('connection', function(spark) {
                                 action: "notice",
                                 data: del_proj.notice
                             });
-                        } else {
+                        }
+                        else {
                             spark.write({
                                 action: "delete_project",
                                 data: del_proj
                             })
                         }
-                    })();
+                    }).then(function(value) {
+                        console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });
                 }
                 break;
             case "edit_map":
                 {
-                    co(function * () {
+                    co(function*() {
                         var map = {};
                         map.creator = spark.user;
                         map.data = packet.data;
@@ -867,7 +994,8 @@ primus.on('connection', function(spark) {
                                 action: "notice",
                                 data: map1.notice
                             });
-                        } else {
+                        }
+                        else {
                             if (~spark.rooms().indexOf(packet.scope.pid)) {
                                 spark.room(packet.scope.pid).write({
                                     action: "edit_map",
@@ -877,7 +1005,8 @@ primus.on('connection', function(spark) {
                                         m_n: packet.scope.m_n
                                     }
                                 });
-                            } else {
+                            }
+                            else {
                                 spark.join(packet.scope.pid, function() {
                                     spark.room(packet.scope.pid).write({
                                         action: "edit_map",
@@ -890,12 +1019,16 @@ primus.on('connection', function(spark) {
                                 });
                             }
                         }
-                    })();
+                    }).then(function(value) {
+                        console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });
                 }
                 break;
             case "coupun":
                 {
-                    co(function * () {
+                    co(function*() {
                         var coupun = packet.data;
                         coupun.user = spark.user;
                         var uzer = yield coupun(coupun);
@@ -904,13 +1037,18 @@ primus.on('connection', function(spark) {
                                 action: "notice",
                                 data: uzer.notice
                             });
-                        } else {
+                        }
+                        else {
                             spark.write({
                                 action: "user_coupun",
                                 data: uzer
                             })
                         }
-                    })();
+                    }).then(function(value) {
+                        console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });
                 }
                 break;
         }
@@ -949,6 +1087,3 @@ if (!module.parent) {
 app.port = 80;
 app.name = "jutja";
 **/
-
-
-

@@ -20,7 +20,8 @@ User.prototype.generateHash = function(password, cb) {
     try {
         encrypred = crypto.createHmac('sha1', salt).update(password).digest('hex');
         return cb(null, encrypred);
-    } catch (err) {
+    }
+    catch (err) {
         return cb(err);
     }
 };
@@ -31,10 +32,12 @@ User.prototype.generateHash = function(password, cb) {
 var authenticator = function(user_pass, supplied_pass, salt, cb) {
     if (!supplied_pass) {
         return cb(new Error("No password was supplied"));
-    } else {
+    }
+    else {
         if (crypto.createHmac('sha1', salt).update(supplied_pass).digest('hex') == user_pass) {
             return cb(null, true);
-        } else {
+        }
+        else {
             return cb(null, false);
         }
     }
@@ -124,7 +127,7 @@ passport.use('local-signup', new LocalStrategy({
                                 }
                                 user.hash = password;
                                 user.gravatar = crypto.createHash('md5').update(user.email).digest("hex");
-                                co(function * () {
+                                co(function*() {
                                     var firstpid = yield firstproject(user);
                                     user.projects = {};
                                     user.projects[firstpid] = "Welcome Project";
@@ -143,16 +146,22 @@ passport.use('local-signup', new LocalStrategy({
                                         }
                                         return done(null, user);
                                     });
-                                })();
+                                }).then(function(value) {
+                                    // console.log(value);
+                                }, function(err) {
+                                    console.error(err.stack);
+                                });
                             });
-                        } else {
+                        }
+                        else {
                             if (uzer.ref) {
                                 uzer.ref[user._id] = {
                                     'date': Date.now(),
                                     'verified': false,
                                     'email': user.email
                                 }
-                            } else {
+                            }
+                            else {
                                 uzer.ref = {};
                                 uzer.ref[user._id] = {
                                     'date': Date.now(),
@@ -162,14 +171,15 @@ passport.use('local-signup', new LocalStrategy({
                             }
                             uzer.markModified('ref');
                             uzer.save(function save(err) {
-                                if (err) {} else {
+                                if (err) {}
+                                else {
                                     user.generateHash(password, function generateHash(err, password) {
                                         if (err) {
                                             return done(err);
                                         }
                                         user.hash = password;
                                         user.gravatar = crypto.createHash('md5').update(user.email).digest("hex");
-                                        co(function * () {
+                                        co(function*() {
                                             var firstpid = yield firstproject(user);
                                             user.projects = {};
                                             user.projects[firstpid] = "Welcome Project";
@@ -188,7 +198,11 @@ passport.use('local-signup', new LocalStrategy({
                                                 }
                                                 return done(null, user);
                                             });
-                                        })();
+                                        }).then(function(value) {
+                                            // console.log(value);
+                                        }, function(err) {
+                                            console.error(err.stack);
+                                        });
                                     });
                                 }
                             });
@@ -231,33 +245,36 @@ passport.use(new FacebookStrategy({
                 // if the user is found, then log them in
                 if (user) {
                     return done(null, user); // user found, return that user
-                } else {
-                    co(function * () {
+                }
+                else {
+                    co(function*() {
                         var ref = req.session;
                         if (ref) {
                             User.findById(ref.r, function(err, uzer) {
                                 if (err) {
 
-                                } else {
+                                }
+                                else {
                                     if (uzer && uzer.ref) {
                                         uzer.ref[user.email] = {
                                             'date': Date.now(),
                                             'verified': false
                                         }
-                                    uzer.markModified('ref');
-                                    uzer.save(function save() {
-                                        if (err) {}
-                                    });
-                                    } else if(uzer) {
+                                        uzer.markModified('ref');
+                                        uzer.save(function save() {
+                                            if (err) {}
+                                        });
+                                    }
+                                    else if (uzer) {
                                         uzer.ref = {};
                                         uzer.ref[user.email] = {
                                             'date': Date.now(),
                                             'verified': false
                                         };
-                                    uzer.markModified('ref');
-                                    uzer.save(function save() {
-                                        if (err) {}
-                                    });
+                                        uzer.markModified('ref');
+                                        uzer.save(function save() {
+                                            if (err) {}
+                                        });
                                     }
 
                                 }
@@ -294,11 +311,11 @@ passport.use(new FacebookStrategy({
                             // if successful, return the new user
                             return done(null, newUser);
                         });
-                    })();
-
-
-
-
+                    }).then(function(value) {
+                        // console.log(value);
+                    }, function(err) {
+                        console.error(err.stack);
+                    });
                 }
             });
 
@@ -332,7 +349,8 @@ module.exports.gravatr = function gravatr(uzer, mail) {
                 done(null, {
                     notice: "Session expired ,Please login again"
                 });
-            } else {
+            }
+            else {
                 user.gravatar = crypto.createHash('md5').update(mail).digest("hex");
                 user.save(function save() {
                     if (err) {
@@ -359,20 +377,23 @@ module.exports.password_reset = function password_reset(user_) {
                     done(null, {
                         notice: "Session expired , Please login again"
                     });
-                } else {
+                }
+                else {
                     user.generateHash(user_.temp_pass, function(err, password) {
                         if (err) {
                             done(null, {
                                 notice: "Password coudn't be reset, Please try again later"
                             });
-                        } else {
+                        }
+                        else {
                             user.hash = password;
                             user.save(function save() {
                                 if (err) {
                                     done(null, {
                                         notice: "Password coudn't be reset, Please try again later"
                                     });
-                                } else done(null, {
+                                }
+                                else done(null, {
                                     success: "your password has been reset successfully"
                                 });
                             })
@@ -380,7 +401,8 @@ module.exports.password_reset = function password_reset(user_) {
                     });
                 }
             });
-        } else {
+        }
+        else {
             done(null, {
                 notice: "Request not good"
             })
@@ -396,7 +418,8 @@ module.exports.check_token = function(token) {
         }, function(err, pass) {
             if (err) {
                 done(null, "Password Reset Token doesn't exists,Please try again")
-            } else {
+            }
+            else {
                 if (pass && pass._id == token.token) {
                     User.findOne({
                         'email': pass.email
@@ -424,7 +447,8 @@ module.exports.check_token = function(token) {
                                     smtpTransport.sendMail(mailOptions, function(error, response) {
                                         if (error) {
                                             console.log(error);
-                                        } else {
+                                        }
+                                        else {
                                             console.log("Message sent: " + response.message);
                                         }
                                         // if you don't want to use this transport object anymore, uncomment following line
@@ -447,7 +471,8 @@ module.exports.check_token = function(token) {
 
                         });
                     });
-                } else {
+                }
+                else {
                     done(null, "Sorry the token has expired.Please try to reset the site again");
                 }
 
@@ -465,7 +490,8 @@ module.exports.create_token = function(token) {
         }, function findOne(err, user) {
             if (err) {
                 done(null, "There was some error");
-            } else {
+            }
+            else {
                 if (user) {
                     r_pass.remove({
                         'email': token.email
@@ -490,7 +516,8 @@ module.exports.create_token = function(token) {
                             smtpTransport.sendMail(mailOptions, function(error, response) {
                                 if (error) {
                                     console.log(error);
-                                } else {
+                                }
+                                else {
                                     console.log("Message sent: " + response.message);
                                 }
 
@@ -504,7 +531,8 @@ module.exports.create_token = function(token) {
 
                         });
                     });
-                } else {
+                }
+                else {
                     done(null, "User not registered")
                 }
 

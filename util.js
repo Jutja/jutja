@@ -8,9 +8,11 @@ var findemail = function(userdetails) {
     //this loop stores right value of email in email variable
     if (userdetails.email) {
         var email = userdetails.email;
-    } else if (userdetails.facebook.email) {
+    }
+    else if (userdetails.facebook.email) {
         var email = userdetails.facebook.email;
-    } else {
+    }
+    else {
         return false;
     }
     return email;
@@ -19,7 +21,8 @@ var findemail = function(userdetails) {
 var checkeditor = function(email, editor) {
         if (editor.indexOf(email) >= 0) {
             return true;
-        } else return false;
+        }
+        else return false;
     }
     //this function add the projects of secondary users(intended). Here User is an array. If User is not registered, 
     //he will receive an invitation to this website
@@ -31,22 +34,26 @@ var updateusers = function(pid, pname, user) {
             }, function(err, fuser) {
                 if (err) {
                     status[user[i]] = "Could not be added";
-                } else {
+                }
+                else {
                     if (fuser) {
                         if (fuser.projects.hasOwnProperty(pname)) {
                             status[user[i]] = "already has a project by same name";
-                        } else {
+                        }
+                        else {
                             fuser.projects[pname] = pid;
                             fuser.markModified('projects');
                             fuser.save(function save() {
                                 if (err) {
                                     status[user[i]] = "Project could not be saved in this user's info. Please try again later or contact support"
-                                } else {
+                                }
+                                else {
                                     status[user[i]] = "User has been Added"
                                 }
                             })
                         }
-                    } else {
+                    }
+                    else {
                         status[user[i]] = "User not registered";
                     }
                 }
@@ -68,7 +75,8 @@ var removeusers = function(pid, name, user) {
             }, function(err, fuser) {
                 if (err) {
                     status[user[i]] = "Could not be added";
-                } else {
+                }
+                else {
                     if (fuser) {
                         if (fuser.projects.hasOwnProperty(name)) {
                             delete fuser.projects[name];
@@ -76,12 +84,14 @@ var removeusers = function(pid, name, user) {
                             fuser.save(function save() {
                                 if (err) {
                                     status[user[i]] = "Project could not be deleted from this user's info. Please try again later or contact support"
-                                } else {
+                                }
+                                else {
                                     status[user[i]] = "project deleted from the user"
                                 }
                             })
                         }
-                    } else {
+                    }
+                    else {
                         status[user[i]] = "User not registered";
                     }
                 }
@@ -105,9 +115,11 @@ module.exports.getprojects = function(userid) {
                 done(null, {
                     notice: "error in connection. Please try again later or contact support"
                 });
-            } else if (user) {
+            }
+            else if (user) {
                 done(null, user.projects);
-            } else {
+            }
+            else {
                 done(null, {
                     notice: "session expired.Please try again later"
                 });
@@ -136,12 +148,14 @@ module.exports.createproject = function(userdetails) {
                         var emails = userdetails.tproject.members.split(',');
                         temp_project.users = {};
                         temp_project.users.editor = emails;
-                    } else {
+                    }
+                    else {
                         emails = []
                     }
                     if (userdetails.email) {
                         temp_project.users.editor.push(userdetails.email)
-                    } else if (userdetails.facebook.email) {
+                    }
+                    else if (userdetails.facebook.email) {
                         temp_project.users.editor.push(userdetails.facebook.email);
                     }
                     var stat = updateusers(temp_project._id, temp_project.name, emails);
@@ -150,7 +164,8 @@ module.exports.createproject = function(userdetails) {
                             done(null, {
                                 notice: "Project coudn't be saved, Please try again sometime later"
                             });
-                        } else {
+                        }
+                        else {
                             user.projects[temp_project.name] = temp_project._id;
                             user.markModified('projects');
                             user.save(function save() {
@@ -164,11 +179,13 @@ module.exports.createproject = function(userdetails) {
                             done(null, temp_project);
                         }
                     });
-                } else if (user.projects.hasOwnProperty(userdetails.tproject.name)) { //THis means the project exists
+                }
+                else if (user.projects.hasOwnProperty(userdetails.tproject.name)) { //THis means the project exists
                     done(null, {
                         notice: "You have already created a project with same name, please use a different name"
                     });
-                } else done(null, {
+                }
+                else done(null, {
                     notice: "nothing is matching"
                 });
             }
@@ -191,21 +208,25 @@ module.exports.findproject = function(userdetails) {
                 if (proj) {
                     if (userdetails.email) {
                         var email = userdetails.email;
-                    } else if (userdetails.facebook.email) {
+                    }
+                    else if (userdetails.facebook.email) {
                         var email = userdetails.facebook.email;
-                    } else {
+                    }
+                    else {
                         done(null, {
                             notice: "Please Login Again"
                         });
                     }
                     if (proj.users.editor.indexOf(email) >= 0) {
                         done(null, proj);
-                    } else {
+                    }
+                    else {
                         done(null, {
                             notice: "You Do not have access to the requested Project"
                         });
                     }
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "project not found or was deleted"
                     })
@@ -223,7 +244,8 @@ module.exports.editproject = function(userdetails) {
             function(err, proj) {
                 if (err) {
                     done(null, "Please login again");
-                } else {
+                }
+                else {
                     if (proj) {
                         var email = findemail(userdetails);
                         if (email) {
@@ -237,7 +259,8 @@ module.exports.editproject = function(userdetails) {
                                             done(null, {
                                                 notice: "Please Login again ot Try again Later"
                                             });
-                                        } else if (user) {
+                                        }
+                                        else if (user) {
                                             delete user.projects[userdetails.eproject.old_name];
                                             user.projects[userdetails.eproject.name] = userdetails.eproject.old_id;
                                             user.markModified('projects');
@@ -259,17 +282,20 @@ module.exports.editproject = function(userdetails) {
                                     }
                                     done(null, JSON.stringify(proj));
                                 });
-                            } else {
+                            }
+                            else {
                                 done(null, {
                                     notice: "You do not have access to this project"
                                 })
                             }
-                        } else {
+                        }
+                        else {
                             done(null, {
                                 notice: "please login again"
                             })
                         };
-                    } else {
+                    }
+                    else {
                         done(null, {
                             notice: "Project not found or was deleted"
                         })
@@ -299,17 +325,20 @@ module.exports.deleteproject = function(userdetails) {
                             done(null, {
                                 delete: "Project has been deleted"
                             });
-                        } else {
+                        }
+                        else {
                             done(null, {
                                 notice: "You Do not have access to this project."
                             })
                         };
-                    } else {
+                    }
+                    else {
                         done(null, {
                             notice: "Please Login Again"
                         })
                     };
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "Project not found"
                     })
@@ -321,72 +350,77 @@ module.exports.deleteproject = function(userdetails) {
 //Here Each project has a object maps which has map_name as key . Each of maps[map_name] is an object which has two attributes lastindex and a map arraym
 // Map array has all the nodes in form of objects
 module.exports.createmap = function(map) {
-    return function(done) {
-        Project.findOne({
-            '_id': userdetails.cmaps.project_id
-        }, function findmap(err, proj) {
-            if (err) {
-                done(null, "please login again");
-            } else {
-                if (proj) {
-                    var email = findemail(userdetails);
-                    if (email) {
-                        if (checkeditor(email, proj.users.editor)) {
-                            userdetails.cmaps.childi_no = [];
-                            if (proj.maps.hasOwnProperty(userdetails.cmaps.map_name)) {
-                                proj.maps[userdetails.cmaps.map_name].lastindex = proj.maps[userdetails.cmaps.map_name].lastindex + 1;
-                                proj.maps[userdetails.cmaps.map_name].map.push({
-                                    name: userdetails.cmaps.name,
-                                    info: userdetails.cmaps.info,
-                                    childi_no: userdetails.cmaps.childi_no,
-                                    i_no: proj.maps[userdetails.cmaps.map_name].lastindex,
-                                    parenti_no: userdetails.cmaps.parenti_no,
-                                    due_date: userdetails.cmaps.due_date,
-                                    status: userdetails.cmaps.status
-                                });
-                            } else {
-                                proj.maps[userdetails.cmaps.map_name] = {};
-                                proj.maps[userdetails.cmaps.map_name].map = [];
-                                proj.maps[userdetails.cmaps.map_name].map[0] = {
-                                    name: userdetails.cmaps.name,
-                                    info: userdetails.cmaps.info,
-                                    childi_no: userdetails.cmaps.childi_no,
-                                    i_no: 10000,
-                                    parenti_no: userdetails.cmaps.parenti_no,
-                                    due_date: userdetails.cmaps.due_date,
-                                    status: userdetails.cmaps.status
-                                };
-                                proj.maps[userdetails.cmaps.map_name].lastindex = 10000;
-                            }
-                            proj.markModified('maps');
-                            //  proj.maps[userdetails.cmaps.name].info = userdetails.cmaps.info;
-                            proj.save(function save() {
-                                if (err) {
-                                    done(null, "map cannot be created");
+        return function(done) {
+            Project.findOne({
+                '_id': userdetails.cmaps.project_id
+            }, function findmap(err, proj) {
+                if (err) {
+                    done(null, "please login again");
+                }
+                else {
+                    if (proj) {
+                        var email = findemail(userdetails);
+                        if (email) {
+                            if (checkeditor(email, proj.users.editor)) {
+                                userdetails.cmaps.childi_no = [];
+                                if (proj.maps.hasOwnProperty(userdetails.cmaps.map_name)) {
+                                    proj.maps[userdetails.cmaps.map_name].lastindex = proj.maps[userdetails.cmaps.map_name].lastindex + 1;
+                                    proj.maps[userdetails.cmaps.map_name].map.push({
+                                        name: userdetails.cmaps.name,
+                                        info: userdetails.cmaps.info,
+                                        childi_no: userdetails.cmaps.childi_no,
+                                        i_no: proj.maps[userdetails.cmaps.map_name].lastindex,
+                                        parenti_no: userdetails.cmaps.parenti_no,
+                                        due_date: userdetails.cmaps.due_date,
+                                        status: userdetails.cmaps.status
+                                    });
                                 }
-                                done(null, proj.maps[userdetails.cmaps.map_name].map);
-                            });
-                        } else {
+                                else {
+                                    proj.maps[userdetails.cmaps.map_name] = {};
+                                    proj.maps[userdetails.cmaps.map_name].map = [];
+                                    proj.maps[userdetails.cmaps.map_name].map[0] = {
+                                        name: userdetails.cmaps.name,
+                                        info: userdetails.cmaps.info,
+                                        childi_no: userdetails.cmaps.childi_no,
+                                        i_no: 10000,
+                                        parenti_no: userdetails.cmaps.parenti_no,
+                                        due_date: userdetails.cmaps.due_date,
+                                        status: userdetails.cmaps.status
+                                    };
+                                    proj.maps[userdetails.cmaps.map_name].lastindex = 10000;
+                                }
+                                proj.markModified('maps');
+                                //  proj.maps[userdetails.cmaps.name].info = userdetails.cmaps.info;
+                                proj.save(function save() {
+                                    if (err) {
+                                        done(null, "map cannot be created");
+                                    }
+                                    done(null, proj.maps[userdetails.cmaps.map_name].map);
+                                });
+                            }
+                            else {
+                                done(null, {
+                                    notice: "You Do not have access to this project."
+                                })
+                            };
+                        }
+                        else {
                             done(null, {
-                                notice: "You Do not have access to this project."
+                                notice: "Please Login Again"
                             })
                         };
-                    } else {
+                    }
+                    else {
                         done(null, {
-                            notice: "Please Login Again"
+                            notice: "Project not found"
                         })
                     };
-                } else {
-                    done(null, {
-                        notice: "Project not found"
-                    })
-                };
 
-            }
-        });
+                }
+            });
+        }
     }
-}
-// childi_no empty array is created as only one node at a time is created and we don't need to get it from frontend.Rest is kinda simple :p
+    // childi_no empty array is created as only one node at a time is created and we don't need to get it from frontend.Rest is kinda simple :p
 module.exports.addnode = function(userdetails) {
     return function(done) {
         Project.findOne({
@@ -394,7 +428,8 @@ module.exports.addnode = function(userdetails) {
         }, function findmap(err, proj) {
             if (err) {
                 done(null, "please login again");
-            } else {
+            }
+            else {
                 if (proj) {
                     var email = findemail(userdetails);
                     if (email) {
@@ -422,10 +457,12 @@ module.exports.addnode = function(userdetails) {
                                 }
                                 if (key === 1) {
                                     proj.maps[userdetails.cmaps.map_name].map[i].childi_no.push(proj.maps[userdetails.cmaps.map_name].lastindex);
-                                } else done(null, {
+                                }
+                                else done(null, {
                                     notice: "node not found"
                                 });
-                            } else {
+                            }
+                            else {
                                 done(null, {
                                     notice: "map does not exit"
                                 });
@@ -440,17 +477,20 @@ module.exports.addnode = function(userdetails) {
                                 }
                                 done(null, proj.maps[userdetails.cmaps.map_name].map);
                             });
-                        } else {
+                        }
+                        else {
                             done(null, {
                                 notice: "Sorry You cannot add a node to this node"
                             })
                         };
-                    } else {
+                    }
+                    else {
                         done(null, {
                             notice: "Session has expired. Please Login Again."
                         })
                     };
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "Project not found. Seems it has been deleted. Please contact support if you think this is an error."
                     })
@@ -469,7 +509,8 @@ module.exports.editnode = function(userdetails) {
         }, function findmap(err, proj) {
             if (err) {
                 done(null, "please login again");
-            } else {
+            }
+            else {
                 if (proj) {
                     var email = findemail(userdetails);
                     if (email) {
@@ -496,16 +537,20 @@ module.exports.editnode = function(userdetails) {
                                         if (userdetails.cmaps.voting.like && !userdetails.cmaps.voting.dislike) {
                                             proj.maps[userdetails.cmaps.map_name].map[i].voting = userdetails.cmaps.voting;
                                             proj.maps[userdetails.cmaps.map_name].map[i].voting.dislike = [];
-                                        } else if (!userdetails.cmaps.voting.like && userdetails.cmaps.voting.dislike) {
+                                        }
+                                        else if (!userdetails.cmaps.voting.like && userdetails.cmaps.voting.dislike) {
                                             proj.maps[userdetails.cmaps.map_name].map[i].voting = userdetails.cmaps.voting;
                                             proj.maps[userdetails.cmaps.map_name].map[i].voting.like = [];
-                                        } else if (!userdetails.cmaps.voting.like && !userdetails.cmaps.voting.dislike) {
+                                        }
+                                        else if (!userdetails.cmaps.voting.like && !userdetails.cmaps.voting.dislike) {
                                             proj.maps[userdetails.cmaps.map_name].map[i].voting.like = [];
                                             proj.maps[userdetails.cmaps.map_name].map[i].voting.dislike = [];
-                                        } else {
+                                        }
+                                        else {
                                             proj.maps[userdetails.cmaps.map_name].map[i].voting = userdetails.cmaps.voting;
                                         }
-                                    } else {
+                                    }
+                                    else {
                                         proj.maps[userdetails.cmaps.map_name].map[i].voting = {};
                                         proj.maps[userdetails.cmaps.map_name].map[i].voting.like = [];
                                         proj.maps[userdetails.cmaps.map_name].map[i].voting.dislike = [];
@@ -519,21 +564,26 @@ module.exports.editnode = function(userdetails) {
                                         done(null, JSON.stringify(proj.maps[userdetails.cmaps.map_name].map));
                                     });
 
-                                } else done(null, "node not found");
-                            } else {
+                                }
+                                else done(null, "node not found");
+                            }
+                            else {
                                 done(null, "map does not exit");
                             }
-                        } else {
+                        }
+                        else {
                             done(null, {
                                 notice: "Sorry You cannot add a node to this node"
                             })
                         };
-                    } else {
+                    }
+                    else {
                         done(null, {
                             notice: "Session has expired. Please Login Again."
                         })
                     };
-                } else {
+                }
+                else {
                     done(null, {
                         notice: "Project not found. Seems it has been deleted. Please contact support if you think this is an error."
                     })
@@ -552,23 +602,28 @@ module.exports.findmap = function(userdetails) {
                 done(null, {
                     notice: "please login again"
                 });
-            } else {
+            }
+            else {
                 if (proj) {
                     var email = findemail(userdetails);
                     if (email) {
                         if (checkeditor(email, proj.users.editor)) {
                             if (proj.maps.hasOwnProperty(userdetails.cmaps.name)) {
                                 done(null, proj.maps[userdetails.cmaps.name].map);
-                            } else done(null, {
+                            }
+                            else done(null, {
                                 notice: "Map not found"
                             });
-                        } else done(null, {
+                        }
+                        else done(null, {
                             notice: "You do not have access tot this map"
                         });
-                    } else done(null, {
+                    }
+                    else done(null, {
                         notice: "Please Login again"
                     });
-                } else done(null, {
+                }
+                else done(null, {
                     notice: "Project Not Found"
                 });
             }
@@ -586,7 +641,8 @@ module.exports.deletenode = function(userdetails) {
                 done(null, {
                     notice: "please login again"
                 });
-            } else {
+            }
+            else {
                 if (proj) {
                     var email = findemail(userdetails);
                     if (email) {
@@ -599,7 +655,8 @@ module.exports.deletenode = function(userdetails) {
                                         proj.maps[userdetails.cmaps.map_name].map[i].childi_no = [];
                                     }
                                 }
-                            } else {
+                            }
+                            else {
                                 proj.maps[userdetails.cmaps.map_name].map[i] = {};
                             }
                             proj.markModified('maps');
@@ -612,13 +669,16 @@ module.exports.deletenode = function(userdetails) {
                                 }
                                 done(null, proj.maps[userdetails.cmaps.map_name].map);
                             });
-                        } else done(null, {
+                        }
+                        else done(null, {
                             notice: "You do not have access tot this map"
                         });
-                    } else done(null, {
+                    }
+                    else done(null, {
                         notice: "Please Login again"
                     });
-                } else done(null, {
+                }
+                else done(null, {
                     notice: "Project Not Found"
                 });
             }
@@ -649,7 +709,8 @@ module.exports.teamcreate = function(userdetails) {
             temp_team.save(function save() {
                 if (err) {
                     done(null, "Team couldn't be saved, Please try again sometime later");
-                } else {
+                }
+                else {
                     done(null, temp_team);
                 }
             });
@@ -673,7 +734,8 @@ module.exports.teamadd = function(userdetails) {
                 team.save(function save() {
                     if (err) {
                         done(null, "Team couldn't be saved, Please try again sometime later");
-                    } else {
+                    }
+                    else {
                         done(null, temp_team);
                     }
                 });
@@ -695,11 +757,13 @@ module.exports.teamremove = function(userdetails) {
                 team.save(function save() {
                     if (err) {
                         done(null, "Team couldn't be saved, Please try again sometime later");
-                    } else {
+                    }
+                    else {
                         done(null, team);
                     }
                 })
-            } else {
+            }
+            else {
                 done(null, "team not found")
             }
         });
@@ -715,7 +779,8 @@ module.exports.teamfind = function(userdetails) {
             }
             if (team) {
                 return done(null, team);
-            } else {
+            }
+            else {
                 return done(null, "team not found");
             }
         })
@@ -733,7 +798,8 @@ module.exports.teamdelete = function(userdetails) {
                 if (team) {
                     team.remove();
                     done(null, "Team has been deleted");
-                } else {
+                }
+                else {
                     done(null, "Team not found")
                 }
             });
